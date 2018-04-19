@@ -4,6 +4,7 @@ Created on 18 avr. 2018
 @author: vauge
 '''
 import xml.etree.ElementTree as etree
+import sys
 
 class Test:
     '''
@@ -109,12 +110,28 @@ def compare_results(results1, results2):
         if name not in results1:
             print('> Test "{}" is in results 2 but not in results 1'.format(name))
 
-''' main '''
 
-results1 = construct_results('A:\\ONVIF tests\\tests_dahua.xml')
-#results2 = construct_results('A:\\ONVIF tests\\tests_hikvision.xml')
+def main():
+    ''' main '''
+    if len(sys.argv) != 3:
+        print('Usage: {} <file 1> <file 2>'.format(sys.argv[0]))
+        return
+    
+    results1 = construct_results(sys.argv[1])
+    results2 = construct_results(sys.argv[2])
+    
+    analyse_results(results1)
+    analyse_results(results2)
+    
+    compare_results(results1, results2)
+    
+    #results1 = construct_results('A:\\ONVIF tests\\tests_dahua.xml')
+    #results2 = construct_results('A:\\ONVIF tests\\tests_hikvision.xml')
+    
+    #analyse_results(results1)
+    #analyse_results(results2)
+    
+    #compare_results(results1, results1)
 
-analyse_results(results1)
-#analyse_results(results2)
-
-compare_results(results1, results1)
+if __name__ == '__main__':
+    main()
