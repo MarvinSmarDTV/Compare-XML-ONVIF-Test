@@ -6,6 +6,9 @@ Created on 18 avr. 2018
 import xml.etree.ElementTree as etree
 import sys
 
+class MalformedResultsFile(Exception):
+    pass
+
 class Test:
     '''
     Class that represent a test with it's name, requirement level,
@@ -34,8 +37,8 @@ def construct_steps(steps_node):
     
     # Run through all StepResult nodes
     for i in range(total_steps):
-        name = steps_node[i][1].text
-        result = steps_node[i][-1].text
+        name = steps_node[i].find('StepName').text
+        result = steps_node[i].find('Status').text
         
         steps.append(Step(name, result))
     
@@ -49,10 +52,10 @@ def construct_tests(results_node):
     
     # Run through all TestResult nodes
     for i in range(len(results_node)):
-        name = results_node[i][0][1].text
-        requierment_level = results_node[i][0][5].text
-        result = results_node[i][1][1].text
-        steps_node = results_node[i][1][0]
+        name = results_node[i].find('TestInfo').find('Name').text
+        requierment_level = results_node[i].find('TestInfo').find('RequirementLevel').text
+        result = results_node[i].find('Log').find('TestStatus').text
+        steps_node = results_node[i].find('Log').find('Steps')
         
         results[name] = Test(requierment_level, result, 0, construct_steps(steps_node))
         
@@ -66,7 +69,9 @@ def construct_results(file):
     tree = etree.parse(file)
     
     root_node = tree.getroot()
-    results_node = root_node[3]
+    results_node = root_node.find('Results')
+    if results_node == None:
+        raise MalformedResultsFile('No "Results" node')
 
     return construct_tests(results_node)
 
