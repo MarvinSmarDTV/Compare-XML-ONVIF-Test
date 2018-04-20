@@ -38,12 +38,12 @@ class Test:
         
         assert len(results) == 3
     
-    def test_construct_tests_right_time(self):
-        result_nodes = etree.parse('test_files\\results.xml').findall('TestResult')
-        results = construct_tests(result_nodes)
-        
-        for i in range(len(result_nodes)):
-            assert results[result_nodes[i].find('TestInfo').find('Name').text].time == 0
+#     def test_construct_tests_right_time(self):
+#         result_nodes = etree.parse('test_files\\results.xml').findall('TestResult')
+#         results = construct_tests(result_nodes)
+#         
+#         for i in range(len(result_nodes)):
+#             assert results[result_nodes[i].find('TestInfo').find('Name').text].time == 0
     
     def test_construct_tests_right_requirement_level(self):
         result_nodes = etree.parse('test_files\\results.xml').findall('TestResult')
