@@ -132,14 +132,6 @@ def main():
     analyse_results(results2)
     
     compare_results(results1, results2)
-    
-    #results1 = construct_results('A:\\ONVIF tests\\tests_dahua.xml')
-    #results2 = construct_results('A:\\ONVIF tests\\tests_hikvision.xml')
-    
-    #analyse_results(results1)
-    #analyse_results(results2)
-    
-    #compare_results(results1, results1)
 
 if __name__ == '__main__':
     main()
