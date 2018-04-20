@@ -4,7 +4,11 @@ Created on 18 avr. 2018
 @author: vauge
 '''
 import xml.etree.ElementTree as etree
+import xmlschema
 import sys
+
+class MalformedResultsFile(Exception):
+    pass
 
 class Test:
     '''
@@ -25,36 +29,35 @@ class Step:
         self.name = name
         self.result = result
 
-def construct_steps(steps_node):
+def construct_steps(step_nodes):
     '''
-    Return an array of Step object given the "Steps" XML node
+    Return an array of Step object given an array of "StepResult" nodes
     '''
     steps = []
-    total_steps = len(steps_node)
     
     # Run through all StepResult nodes
-    for i in range(total_steps):
-        name = steps_node[i][1].text
-        result = steps_node[i][-1].text
+    for sn in step_nodes:
+        name = sn.find('StepName').text
+        result = sn.find('Status').text
         
         steps.append(Step(name, result))
     
     return steps
 
-def construct_tests(results_node):
+def construct_tests(result_nodes):
     '''
-    Return a dictionary of Test object given the "Results" XML node
+    Return a dictionary of Test object given an array of "TestResult" nodes
     '''
     results = {}
     
     # Run through all TestResult nodes
-    for i in range(len(results_node)):
-        name = results_node[i][0][1].text
-        requierment_level = results_node[i][0][5].text
-        result = results_node[i][1][1].text
-        steps_node = results_node[i][1][0]
+    for rn in result_nodes:
+        name = rn.find('TestInfo').find('Name').text
+        requierment_level = rn.find('TestInfo').find('RequirementLevel').text
+        result = rn.find('Log').find('TestStatus').text
+        step_nodes = rn.find('Log').find('Steps').findall('StepResult')
         
-        results[name] = Test(requierment_level, result, 0, construct_steps(steps_node))
+        results[name] = Test(requierment_level, result, 0, construct_steps(step_nodes))
         
     return results
 
@@ -62,13 +65,18 @@ def construct_results(file):
     '''
     Return a dictionary of Test object given an XML file path
     '''
+    # Validate XML file with XML Schema
+    my_schema = xmlschema.XMLSchema('ONVIF_Device_Test_Tool.xsd')
+    if not my_schema.is_valid(file):
+        raise MalformedResultsFile('')
+    
     # Open and parse XML file
     tree = etree.parse(file)
     
     root_node = tree.getroot()
-    results_node = root_node[3]
+    result_nodes = root_node.find('Results').findall('TestResult')
 
-    return construct_tests(results_node)
+    return construct_tests(result_nodes)
 
 def analyse_results(results):
     '''
@@ -124,14 +132,6 @@ def main():
     analyse_results(results2)
     
     compare_results(results1, results2)
-    
-    #results1 = construct_results('A:\\ONVIF tests\\tests_dahua.xml')
-    #results2 = construct_results('A:\\ONVIF tests\\tests_hikvision.xml')
-    
-    #analyse_results(results1)
-    #analyse_results(results2)
-    
-    #compare_results(results1, results1)
 
 if __name__ == '__main__':
     main()

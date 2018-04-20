@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+         <xs:element name="DebugReport">
+               <xs:complexType>
+                     <xs:sequence>
+                           <xs:element name="DeviceInfo">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="Manufacturer" type="xs:string"></xs:element>
+                                             <xs:element name="Model" type="xs:string"></xs:element>
+                                             <xs:element name="SerialNumber" type="xs:string"></xs:element>
+                                             <xs:element name="FirmwareVersion" type="xs:string"></xs:element>
+                                             <xs:element name="HardwareID" type="xs:string"></xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                           <xs:element name="ExecutionTime" type="xs:string"></xs:element>
+                           <xs:element name="ManagementSettings">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="Timeouts">
+                                                   <xs:complexType>
+                                                         <xs:sequence>
+                                                               <xs:element name="MessageTimeout" type="xs:decimal"></xs:element>
+                                                               <xs:element name="RebootTimeout" type="xs:decimal"></xs:element>
+                                                               <xs:element name="TimeBetweenTests" type="xs:decimal"></xs:element>
+                                                               <xs:element name="OperationDelay" type="xs:decimal"></xs:element>
+                                                               <xs:element name="TimeBetweenRequests" type="xs:decimal"></xs:element>
+                                                         </xs:sequence>
+                                                   </xs:complexType>
+                                             </xs:element>
+                                             <xs:element name="Miscellaneous">
+                                                   <xs:complexType>
+                                                         <xs:sequence>
+                                                               <xs:element name="DnsIpv4" type="xs:string"></xs:element>
+                                                               <xs:element name="NtpIpv4" type="xs:string"></xs:element>
+                                                               <xs:element name="DefaultGatewayIpv4" type="xs:string"></xs:element>
+                                                               <xs:element name="DnsIpv6" type="xs:string"></xs:element>
+                                                               <xs:element name="NtpIpv6" type="xs:string"></xs:element>
+                                                               <xs:element name="DefaultGatewayIpv6" type="xs:string"></xs:element>
+                                                               <xs:element name="PTZNodeToken" type="xs:string"></xs:element>
+                                                               <xs:element name="UseEmbeddedPassword" type="xs:string"></xs:element>
+                                                               <xs:element name="Password1" type="xs:string"></xs:element>
+                                                               <xs:element name="Password2" type="xs:string"></xs:element>
+                                                               <xs:element name="SecureMethod" type="xs:string"></xs:element>
+                                                               <xs:element name="EventTopic" type="xs:string"></xs:element>
+                                                               <xs:element name="TopicNamespaces" type="xs:string"></xs:element>
+                                                               <xs:element name="SecondEventTopic" type="xs:string"></xs:element>
+                                                               <xs:element name="SecondTopicNamespaces" type="xs:string"></xs:element>
+                                                               <xs:element name="SubscriptionTimeout" type="xs:decimal"></xs:element>
+                                                               <xs:element name="RelayOutputDelayTime" type="xs:decimal"></xs:element>
+                                                               <xs:element name="RecordingToken" type="xs:string"></xs:element>
+                                                               <xs:element name="SearchTimeout" type="xs:decimal"></xs:element>
+                                                               <xs:element name="MetadataFilter" type="xs:string"></xs:element>
+                                                               <xs:element name="RetentionTime" type="xs:string"></xs:element>
+                                                         </xs:sequence>
+                                                   </xs:complexType>
+                                             </xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                           <xs:element name="Results">
+                                 <xs:complexType>
+                                       <xs:sequence>
+                                             <xs:element name="TestResult" maxOccurs="unbounded">
+                                                   <xs:complexType>
+                                                         <xs:sequence>
+                                                               <xs:element name="TestInfo">
+                                                                     <xs:complexType>
+                                                                           <xs:sequence>
+                                                                                 <xs:element name="Group" type="xs:string"></xs:element>
+                                                                                 <xs:element name="Name" type="xs:string"></xs:element>
+                                                                                 <xs:element name="Id" type="xs:string"></xs:element>
+                                                                                 <xs:element name="LastChangedIn" type="xs:string"></xs:element>
+                                                                                 <xs:element name="Category" type="xs:string"></xs:element>
+                                                                                 <xs:element name="RequirementLevel">
+																					<xs:simpleType>
+																						<xs:restriction base="xs:string">
+																							<xs:enumeration value="Must"/>
+																							<xs:enumeration value="Optional"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				 </xs:element>
+                                                                                 <xs:element name="RequiredFeatures">
+                                                                                       <xs:complexType>
+                                                                                             <xs:sequence>
+                                                                                                   <xs:element name="Feature" minOccurs="0" maxOccurs="unbounded" type="xs:string"></xs:element>
+                                                                                             </xs:sequence>
+                                                                                       </xs:complexType>
+                                                                                 </xs:element>
+                                                                                 <xs:element name="FunctionalityUnderTest">
+                                                                                       <xs:complexType>
+                                                                                             <xs:sequence>
+                                                                                                   <xs:element name="Functionality" minOccurs="0" maxOccurs="unbounded" type="xs:string"></xs:element>
+                                                                                             </xs:sequence>
+                                                                                       </xs:complexType>
+                                                                                 </xs:element>
+                                                                           </xs:sequence>
+                                                                     </xs:complexType>
+                                                               </xs:element>
+                                                               <xs:element name="Log">
+                                                                     <xs:complexType>
+                                                                           <xs:sequence>
+                                                                                 <xs:element name="Steps">
+                                                                                       <xs:complexType>
+                                                                                             <xs:sequence>
+                                                                                                   <xs:element name="StepResult" maxOccurs="unbounded">
+                                                                                                         <xs:complexType>
+                                                                                                               <xs:sequence>
+                                                                                                                     <xs:element name="Number" type="xs:int"></xs:element>
+                                                                                                                     <xs:element name="StepName" type="xs:string"></xs:element>
+                                                                                                                     <xs:element name="StepStart" type="xs:string"></xs:element>
+                                                                                                                     <xs:element name="StepFinished" type="xs:string"></xs:element>
+                                                                                                                     <xs:element name="Message" type="xs:string"></xs:element>
+																													 <xs:element name="Request" type="xs:string" minOccurs="0" maxOccurs="1" />
+																													 <xs:element name="Response" type="xs:string" minOccurs="0" maxOccurs="1" />
+                                                                                                                     <xs:element name="Status">
+																														<xs:simpleType>
+																															<xs:restriction base="xs:string">
+																																<xs:enumeration value="Passed"/>
+																																<xs:enumeration value="Failed"/>
+																															</xs:restriction>
+																														</xs:simpleType>
+																													 </xs:element>
+																													 <xs:element name="ProcessingTimes" minOccurs="0" maxOccurs="1" >
+																														<xs:complexType>
+																															<xs:sequence>
+																																<xs:element name="int" type="xs:int"></xs:element>
+																															</xs:sequence>
+																														</xs:complexType>
+																													 </xs:element>
+                                                                                                               </xs:sequence>
+                                                                                                         </xs:complexType>
+                                                                                                   </xs:element>
+                                                                                             </xs:sequence>
+                                                                                       </xs:complexType>
+                                                                                 </xs:element>
+                                                                                 <xs:element name="TestStatus">
+																					<xs:simpleType>
+																						<xs:restriction base="xs:string">
+																							<xs:enumeration value="Passed"/>
+																							<xs:enumeration value="Failed"/>
+																						</xs:restriction>
+																					</xs:simpleType>
+																				 </xs:element>
+                                                                           </xs:sequence>
+                                                                     </xs:complexType>
+                                                               </xs:element>
+                                                               <xs:element name="PlainTextLog" type="xs:string"></xs:element>
+                                                         </xs:sequence>
+                                                   </xs:complexType>
+                                             </xs:element>
+                                       </xs:sequence>
+                                 </xs:complexType>
+                           </xs:element>
+                     </xs:sequence>
+                     <!--<xs:attribute name="xmlns:xsi" type="xs:string"></xs:attribute>-->
+                     <!--<xs:attribute name="xmlns:xsd" type="xs:string"></xs:attribute>-->
+               </xs:complexType>
+         </xs:element>
+   </xs:schema>
