@@ -103,3 +103,6 @@ ENV/
 #Liclipse
 .project
 .pydevproject
+
+#pytest
+.pytest_cache/
