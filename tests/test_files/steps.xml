@@ -1,0 +1,145 @@
+        <Steps>
+          <StepResult>
+            <Number>1</Number>
+            <StepName>Get Device service address</StepName>
+            <StepStart>2018-04-13T08:02:41.5384579Z</StepStart>
+            <StepFinished>2018-04-13T08:02:41.5540852Z</StepFinished>
+            <Message>Get Device service address</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>3</Number>
+            <StepName>Get Services</StepName>
+            <StepStart>2018-04-13T08:02:41.8197145Z</StepStart>
+            <StepFinished>2018-04-13T08:02:41.8978397Z</StepFinished>
+            <Message>Get Services</Message>
+            <Request>POST /onvif/device_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 347
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetServices xmlns="http://www.onvif.org/ver10/device/wsdl"&gt;
+      &lt;IncludeCapability&gt;false&lt;/IncludeCapability&gt;
+    &lt;/GetServices&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 1984
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl"&gt;
+  &lt;s:Header /&gt;
+  &lt;s:Body&gt;
+    &lt;tds:GetServicesResponse&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/device/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/device_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/analytics/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/analytics_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/imaging/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/imaging_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/media/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/media_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/ptz/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/ptz_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/events/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/event_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/deviceIO/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/deviceIO_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+    &lt;/tds:GetServicesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>7</Number>
+            <StepName>Check Analytics service is supported</StepName>
+            <StepStart>2018-04-13T08:02:42.0384647Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.0384647Z</StepFinished>
+            <Message>Check Analytics service is supported - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>13</Number>
+            <StepName>Get Service Capabilities(AnalyticsEngine)</StepName>
+            <StepStart>2018-04-13T08:02:42.22597Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.5228458Z</StepFinished>
+            <Message>Get Service Capabilities(AnalyticsEngine)</Message>
+            <Request>POST /onvif/analytics_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 304
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetServiceCapabilities xmlns="http://www.onvif.org/ver20/analytics/wsdl" /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 493
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"&gt;
+  &lt;s:Header /&gt;
+  &lt;s:Body&gt;
+    &lt;tan:GetServiceCapabilitiesResponse&gt;
+      &lt;tan:Capabilities RuleSupport="true" AnalyticsModuleSupport="true" CellBasedSceneDescriptionSupported="false" /&gt;
+    &lt;/tan:GetServiceCapabilitiesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>234</int>
+            </ProcessingTimes>
+          </StepResult>
+        </Steps>
+        
