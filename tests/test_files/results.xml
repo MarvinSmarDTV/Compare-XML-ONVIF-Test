@@ -1,0 +1,1317 @@
+  <Results>
+    <TestResult>
+      <TestInfo>
+        <Group>Analytics Engine\Capabilities</Group>
+        <Name>ANALYTICS-3-1-1-v17.12 GET SERVICES AND GET ANALYTICS SERVICES CAPABILITIES CONSISTENCY</Name>
+        <Id>3-1-1</Id>
+        <LastChangedIn>v17.12</LastChangedIn>
+        <Category>ANALYTICS</Category>
+        <RequirementLevel>Optional</RequirementLevel>
+        <RequiredFeatures>
+          <Feature>AnalyticsService</Feature>
+          <Feature>GetServices</Feature>
+        </RequiredFeatures>
+        <FunctionalityUnderTest>
+          <Functionality>GetServices</Functionality>
+          <Functionality>GetAnalyticsServiceCapabilities</Functionality>
+        </FunctionalityUnderTest>
+      </TestInfo>
+      <Log>
+        <Steps>
+          <StepResult>
+            <Number>1</Number>
+            <StepName>Get Device service address</StepName>
+            <StepStart>2018-04-13T08:02:41.5384579Z</StepStart>
+            <StepFinished>2018-04-13T08:02:41.5540852Z</StepFinished>
+            <Message>Get Device service address</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>2</Number>
+            <StepName>Check that the DUT returned Device service address</StepName>
+            <StepStart>2018-04-13T08:02:41.5540852Z</StepStart>
+            <StepFinished>2018-04-13T08:02:41.5540852Z</StepFinished>
+            <Message>Check that the DUT returned Device service address - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>3</Number>
+            <StepName>Get Services</StepName>
+            <StepStart>2018-04-13T08:02:41.8197145Z</StepStart>
+            <StepFinished>2018-04-13T08:02:41.8978397Z</StepFinished>
+            <Message>Get Services</Message>
+            <Request>POST /onvif/device_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 347
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetServices xmlns="http://www.onvif.org/ver10/device/wsdl"&gt;
+      &lt;IncludeCapability&gt;false&lt;/IncludeCapability&gt;
+    &lt;/GetServices&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 1984
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl"&gt;
+  &lt;s:Header /&gt;
+  &lt;s:Body&gt;
+    &lt;tds:GetServicesResponse&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/device/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/device_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/analytics/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/analytics_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/imaging/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/imaging_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/media/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/media_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/ptz/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/ptz_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/events/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/event_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/deviceIO/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/deviceIO_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+    &lt;/tds:GetServicesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>4</Number>
+            <StepName>Check Analytics service is supported</StepName>
+            <StepStart>2018-04-13T08:02:41.8978397Z</StepStart>
+            <StepFinished>2018-04-13T08:02:41.9447147Z</StepFinished>
+            <Message>Check Analytics service is supported - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>5</Number>
+            <StepName>Check that Analytics service does not contain Capabilities item</StepName>
+            <StepStart>2018-04-13T08:02:41.9447147Z</StepStart>
+            <StepFinished>2018-04-13T08:02:41.9447147Z</StepFinished>
+            <Message>Check that Analytics service does not contain Capabilities item - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>6</Number>
+            <StepName>Get Services</StepName>
+            <StepStart>2018-04-13T08:02:41.9447147Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.0384647Z</StepFinished>
+            <Message>Get Services</Message>
+            <Request>POST /onvif/device_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 346
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetServices xmlns="http://www.onvif.org/ver10/device/wsdl"&gt;
+      &lt;IncludeCapability&gt;true&lt;/IncludeCapability&gt;
+    &lt;/GetServices&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 4137
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl"&gt;
+  &lt;s:Header /&gt;
+  &lt;s:Body&gt;
+    &lt;tds:GetServicesResponse&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/device/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/device_service&lt;/tds:XAddr&gt;
+        &lt;tds:Capabilities&gt;
+          &lt;tds:Capabilities&gt;
+            &lt;tds:Network NTP="0" HostnameFromDHCP="false" Dot11Configuration="false" DynDNS="true" IPVersion6="false" ZeroConfiguration="false" IPFilter="false" /&gt;
+            &lt;tds:Security RELToken="false" HttpDigest="true" UsernameToken="true" KerberosToken="false" SAMLToken="false" X.509Token="false" RemoteUserHandling="false" Dot1X="false" DefaultAccessPolicy="false" AccessPolicyConfig="false" OnboardKeyGeneration="false" TLS1.2="false" TLS1.1="false" TLS1.0="false" /&gt;
+            &lt;tds:System HTTPSupportInformation="false" HTTPSystemLogging="false" HttpSystemBackup="false" HttpFirmwareUpgrade="true" FirmwareUpgrade="true" SystemLogging="true" SystemBackup="false" RemoteDiscovery="false" DiscoveryBye="true" DiscoveryResolve="false" /&gt;
+          &lt;/tds:Capabilities&gt;
+        &lt;/tds:Capabilities&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/analytics/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/analytics_service&lt;/tds:XAddr&gt;
+        &lt;tds:Capabilities&gt;
+          &lt;tan:Capabilities RuleSupport="true" AnalyticsModuleSupport="true" CellBasedSceneDescriptionSupported="false" /&gt;
+        &lt;/tds:Capabilities&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/imaging/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/imaging_service&lt;/tds:XAddr&gt;
+        &lt;tds:Capabilities&gt;
+          &lt;timg:Capabilities ImageStabilization="false" /&gt;
+        &lt;/tds:Capabilities&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/media/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/media_service&lt;/tds:XAddr&gt;
+        &lt;tds:Capabilities&gt;
+          &lt;trt:Capabilities SnapshotUri="true" Rotation="false"&gt;
+            &lt;trt:ProfileCapabilities MaximumNumberOfProfiles="6" /&gt;
+            &lt;trt:StreamingCapabilities RTPMulticast="true" RTP_TCP="true" RTP_RTSP_TCP="true" NonAggregateControl="false" /&gt;
+          &lt;/trt:Capabilities&gt;
+        &lt;/tds:Capabilities&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/ptz/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/ptz_service&lt;/tds:XAddr&gt;
+        &lt;tds:Capabilities&gt;
+          &lt;tptz:Capabilities EFlip="false" Reverse="false" GetCompatibleConfigurations="true" /&gt;
+        &lt;/tds:Capabilities&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/events/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/event_service&lt;/tds:XAddr&gt;
+        &lt;tds:Capabilities&gt;
+          &lt;tev:Capabilities WSSubscriptionPolicySupport="false" WSPullPointSupport="false" WSPausableSubscriptionManagerInterfaceSupport="false" MaxNotificationProducers="10" MaxPullPoints="5" PersistenNotificationStorage="false" /&gt;
+        &lt;/tds:Capabilities&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/deviceIO/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/deviceIO_service&lt;/tds:XAddr&gt;
+        &lt;tds:Capabilities&gt;
+          &lt;tmd:Capabilities VideoSources="1" VideoOutputs="0" AudioSources="0" AudioOutputs="0" RelayOutputs="0" SerialPorts="1" DigitalInputs="0" /&gt;
+        &lt;/tds:Capabilities&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+    &lt;/tds:GetServicesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>7</Number>
+            <StepName>Check Analytics service is supported</StepName>
+            <StepStart>2018-04-13T08:02:42.0384647Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.0384647Z</StepFinished>
+            <Message>Check Analytics service is supported - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>8</Number>
+            <StepName>Check that Analytics service contains Capabilities item</StepName>
+            <StepStart>2018-04-13T08:02:42.0384647Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.054092Z</StepFinished>
+            <Message>Check that Analytics service contains Capabilities item - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>9</Number>
+            <StepName>Check service capabilities is present for Analytics service</StepName>
+            <StepStart>2018-04-13T08:02:42.054092Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.054092Z</StepFinished>
+            <Message>Check service capabilities is present for Analytics service - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>10</Number>
+            <StepName>Parse Capabilities element in GetServices response</StepName>
+            <StepStart>2018-04-13T08:02:42.0697214Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.14784Z</StepFinished>
+            <Message>Parse Capabilities element in GetServices response</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>11</Number>
+            <StepName>Get AnalyticsEngine service address</StepName>
+            <StepStart>2018-04-13T08:02:42.1634685Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.1634685Z</StepFinished>
+            <Message>Get AnalyticsEngine service address</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>12</Number>
+            <StepName>Check that the DUT returned AnalyticsEngine service address</StepName>
+            <StepStart>2018-04-13T08:02:42.1790938Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.1790938Z</StepFinished>
+            <Message>Check that the DUT returned AnalyticsEngine service address - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>13</Number>
+            <StepName>Get Service Capabilities(AnalyticsEngine)</StepName>
+            <StepStart>2018-04-13T08:02:42.22597Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.5228458Z</StepFinished>
+            <Message>Get Service Capabilities(AnalyticsEngine)</Message>
+            <Request>POST /onvif/analytics_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 304
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetServiceCapabilities xmlns="http://www.onvif.org/ver20/analytics/wsdl" /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 493
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl"&gt;
+  &lt;s:Header /&gt;
+  &lt;s:Body&gt;
+    &lt;tan:GetServiceCapabilitiesResponse&gt;
+      &lt;tan:Capabilities RuleSupport="true" AnalyticsModuleSupport="true" CellBasedSceneDescriptionSupported="false" /&gt;
+    &lt;/tan:GetServiceCapabilitiesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>234</int>
+            </ProcessingTimes>
+          </StepResult>
+          <StepResult>
+            <Number>14</Number>
+            <StepName>Check Analytics service Capabilities consistency</StepName>
+            <StepStart>2018-04-13T08:02:42.5540963Z</StepStart>
+            <StepFinished>2018-04-13T08:02:42.5540963Z</StepFinished>
+            <Message>Check Analytics service Capabilities consistency - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+        </Steps>
+        <TestStatus>Passed</TestStatus>
+      </Log>
+      <PlainTextLog>ANALYTICS-3-1-1-v17.12 GET SERVICES AND GET ANALYTICS SERVICES CAPABILITIES CONSISTENCY
+
+   STEP 1 - Get Device service address
+      StepStart: 2018-04-13T08:02:41.5384579Z
+      http://192.168.88.250/onvif/device_service
+   STEP PASSED
+
+   STEP 2 - Check that the DUT returned Device service address
+      StepStart: 2018-04-13T08:02:41.5540852Z
+   STEP PASSED
+
+   STEP 3 - Get Services
+      StepStart: 2018-04-13T08:02:41.8197145Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   STEP 4 - Check Analytics service is supported
+      StepStart: 2018-04-13T08:02:41.8978397Z
+   STEP PASSED
+
+   STEP 5 - Check that Analytics service does not contain Capabilities item
+      StepStart: 2018-04-13T08:02:41.9447147Z
+   STEP PASSED
+
+   STEP 6 - Get Services
+      StepStart: 2018-04-13T08:02:41.9447147Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   STEP 7 - Check Analytics service is supported
+      StepStart: 2018-04-13T08:02:42.0384647Z
+   STEP PASSED
+
+   STEP 8 - Check that Analytics service contains Capabilities item
+      StepStart: 2018-04-13T08:02:42.0384647Z
+   STEP PASSED
+
+   STEP 9 - Check service capabilities is present for Analytics service
+      StepStart: 2018-04-13T08:02:42.054092Z
+   STEP PASSED
+
+   STEP 10 - Parse Capabilities element in GetServices response
+      StepStart: 2018-04-13T08:02:42.0697214Z
+   STEP PASSED
+
+   STEP 11 - Get AnalyticsEngine service address
+      StepStart: 2018-04-13T08:02:42.14784Z
+      http://192.168.88.250/onvif/analytics_service
+   STEP PASSED
+
+   STEP 12 - Check that the DUT returned AnalyticsEngine service address
+      StepStart: 2018-04-13T08:02:42.1634685Z
+   STEP PASSED
+
+   STEP 13 - Get Service Capabilities(AnalyticsEngine)
+      StepStart: 2018-04-13T08:02:42.22597Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   STEP 14 - Check Analytics service Capabilities consistency
+      StepStart: 2018-04-13T08:02:42.5384723Z
+   STEP PASSED
+
+TEST PASSED
+</PlainTextLog>
+    </TestResult>
+    <TestResult>
+      <TestInfo>
+        <Group>Event Handling\Basic Notification Interface</Group>
+        <Name>EVENT-2-1-17-v14.12 BASIC NOTIFICATION INTERFACE - NOTIFY</Name>
+        <Id>2-1-17</Id>
+        <LastChangedIn>v14.12</LastChangedIn>
+        <Category>EVENT</Category>
+        <RequirementLevel>Must</RequirementLevel>
+        <RequiredFeatures>
+          <Feature>WSBasicNotification</Feature>
+        </RequiredFeatures>
+        <FunctionalityUnderTest>
+          <Functionality>Notify</Functionality>
+        </FunctionalityUnderTest>
+      </TestInfo>
+      <Log>
+        <Steps>
+          <StepResult>
+            <Number>1</Number>
+            <StepName>Get Event service address</StepName>
+            <StepStart>2018-04-12T16:07:30.7329743Z</StepStart>
+            <StepFinished>2018-04-12T16:07:30.8892444Z</StepFinished>
+            <Message>Get Event service address</Message>
+            <Request>POST /onvif/device_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 347
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetServices xmlns="http://www.onvif.org/ver10/device/wsdl"&gt;
+      &lt;IncludeCapability&gt;false&lt;/IncludeCapability&gt;
+    &lt;/GetServices&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 1984
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl"&gt;
+  &lt;s:Header /&gt;
+  &lt;s:Body&gt;
+    &lt;tds:GetServicesResponse&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/device/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/device_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/analytics/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/analytics_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/imaging/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/imaging_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/media/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/media_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/ptz/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/ptz_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/events/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/event_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/deviceIO/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/deviceIO_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+    &lt;/tds:GetServicesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>16</int>
+            </ProcessingTimes>
+          </StepResult>
+          <StepResult>
+            <Number>2</Number>
+            <StepName>Get Event Properties</StepName>
+            <StepStart>2018-04-12T16:07:30.9048554Z</StepStart>
+            <StepFinished>2018-04-12T16:07:31.4048772Z</StepFinished>
+            <Message>Get Event Properties</Message>
+            <Request>POST /onvif/event_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Authorization: Digest username="admin", realm="Login to 2D05085GAK00096", qop="auth", algorithm="MD5", uri="/onvif/event_service", nonce="b252aWYtZGlnZXN0OjQzMTQ3NTMyNDcw", nc=00000001, cnonce="8614570AA854E67BC906D4A1AB3A1CC9", opaque="", response="1b2e73ecc82742e9b6f931852ca4641d"
+Content-Length: 724
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:5332cd82-c4b8-4299-aef1-d932061f7232&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo&gt;
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://192.168.88.250/onvif/event_service&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetEventProperties xmlns="http://www.onvif.org/ver10/events/wsdl" /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 3442
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;s:Header&gt;
+    &lt;wsa5:Action&gt;http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse&lt;/wsa5:Action&gt;
+    &lt;wsa5:To&gt;http://192.168.88.250/onvif/event_service&lt;/wsa5:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;tev:GetEventPropertiesResponse&gt;
+      &lt;tev:TopicNamespaceLocation&gt;http://www.onvif.org/onvif/ver10/topics/topicns.xml&lt;/tev:TopicNamespaceLocation&gt;
+      &lt;wsnt:FixedTopicSet&gt;true&lt;/wsnt:FixedTopicSet&gt;
+      &lt;wstop:TopicSet&gt;
+        &lt;tns1:RuleEngine&gt;
+          &lt;CellMotionDetector&gt;
+            &lt;Motion wstop:topic="true"&gt;
+              &lt;tt:MessageDescription IsProperty="true"&gt;
+                &lt;tt:Source&gt;
+                  &lt;tt:SimpleItemDescription Name="VideoSourceConfigurationToken" Type="tt:ReferenceToken" /&gt;
+                  &lt;tt:SimpleItemDescription Name="VideoAnalyticsConfigurationToken" Type="tt:ReferenceToken" /&gt;
+                  &lt;tt:SimpleItemDescription Name="Rule" Type="xs:string" /&gt;
+                &lt;/tt:Source&gt;
+                &lt;tt:Data&gt;
+                  &lt;tt:SimpleItemDescription Name="IsMotion" Type="xs:boolean" /&gt;
+                &lt;/tt:Data&gt;
+              &lt;/tt:MessageDescription&gt;
+            &lt;/Motion&gt;
+          &lt;/CellMotionDetector&gt;
+          &lt;TamperDetector&gt;
+            &lt;Tamper wstop:topic="true"&gt;
+              &lt;tt:MessageDescription IsProperty="true"&gt;
+                &lt;tt:Source&gt;
+                  &lt;tt:SimpleItemDescription Name="VideoSourceConfigurationToken" Type="tt:ReferenceToken" /&gt;
+                  &lt;tt:SimpleItemDescription Name="TamperWindowIndex" Type="xs:string" /&gt;
+                &lt;/tt:Source&gt;
+                &lt;tt:Data&gt;
+                  &lt;tt:SimpleItemDescription Name="IsTamper" Type="xs:string" /&gt;
+                &lt;/tt:Data&gt;
+              &lt;/tt:MessageDescription&gt;
+            &lt;/Tamper&gt;
+          &lt;/TamperDetector&gt;
+        &lt;/tns1:RuleEngine&gt;
+        &lt;tns1:VideoSource&gt;
+          &lt;MotionAlarm wstop:topic="true"&gt;
+            &lt;tt:MessageDescription IsProperty="true"&gt;
+              &lt;tt:Source&gt;
+                &lt;tt:SimpleItemDescription Name="Source" Type="tt:ReferenceToken" /&gt;
+              &lt;/tt:Source&gt;
+              &lt;tt:Data&gt;
+                &lt;tt:SimpleItemDescription Name="State" Type="xs:boolean" /&gt;
+              &lt;/tt:Data&gt;
+            &lt;/tt:MessageDescription&gt;
+          &lt;/MotionAlarm&gt;
+        &lt;/tns1:VideoSource&gt;
+        &lt;tns1:Configuration&gt;
+          &lt;VideoEncoderConfiguration wstop:topic="true"&gt;
+            &lt;tt:MessageDescription IsProperty="true"&gt;
+              &lt;tt:Source&gt;
+                &lt;tt:SimpleItemDescription Name="Token" Type="tt:ReferenceToken" /&gt;
+              &lt;/tt:Source&gt;
+              &lt;tt:Data&gt;
+                &lt;tt:ElementItemDescription Name="Configuration" Type="tt:VideoEncoderConfiguration" /&gt;
+              &lt;/tt:Data&gt;
+            &lt;/tt:MessageDescription&gt;
+          &lt;/VideoEncoderConfiguration&gt;
+          &lt;AudioEncoderConfiguration wstop:topic="true"&gt;
+            &lt;tt:MessageDescription IsProperty="true"&gt;
+              &lt;tt:Source&gt;
+                &lt;tt:SimpleItemDescription Name="Token" Type="tt:ReferenceToken" /&gt;
+              &lt;/tt:Source&gt;
+              &lt;tt:Data&gt;
+                &lt;tt:ElementItemDescription Name="Configuration" Type="tt:AudioEncoderConfiguration" /&gt;
+              &lt;/tt:Data&gt;
+            &lt;/tt:MessageDescription&gt;
+          &lt;/AudioEncoderConfiguration&gt;
+        &lt;/tns1:Configuration&gt;
+      &lt;/wstop:TopicSet&gt;
+      &lt;wsnt:TopicExpressionDialect&gt;http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete&lt;/wsnt:TopicExpressionDialect&gt;
+      &lt;wsnt:TopicExpressionDialect&gt;http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet&lt;/wsnt:TopicExpressionDialect&gt;
+      &lt;tev:MessageContentFilterDialect&gt;http://www.onvif.org/ver10/tev/messageContentFilter/ItemFilter&lt;/tev:MessageContentFilterDialect&gt;
+      &lt;tev:MessageContentSchemaLocation&gt;http://www.onvif.org/onvif/ver10/schema/onvif.xsd&lt;/tev:MessageContentSchemaLocation&gt;
+    &lt;/tev:GetEventPropertiesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>16</int>
+            </ProcessingTimes>
+          </StepResult>
+          <StepResult>
+            <Number>3</Number>
+            <StepName>Creating listening server</StepName>
+            <StepStart>2018-04-12T16:07:31.4204886Z</StepStart>
+            <StepFinished>2018-04-12T16:07:31.748635Z</StepFinished>
+            <Message>Creating listening server</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>4</Number>
+            <StepName>Send Subscribe request</StepName>
+            <StepStart>2018-04-12T16:07:31.7798816Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.0455043Z</StepFinished>
+            <Message>Send Subscribe request</Message>
+            <Request>POST /onvif/event_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Authorization: Digest username="admin", realm="Login to 2D05085GAK00096", qop="auth", algorithm="MD5", uri="/onvif/event_service", nonce="b252aWYtZGlnZXN0OjQzMTQ3NTMzMDMw", nc=00000001, cnonce="B635841A1F62845A9CE030490AC10243", opaque="", response="8b7d94d9d12980ce4b8a0889c9d66b5b"
+Content-Length: 880
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;http://docs.oasis-open.org/wsn/bw-2/NotificationProducer/SubscribeRequest&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:f004f817-0db8-4ab6-8801-3f83d4b70e49&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo&gt;
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://192.168.88.250/onvif/event_service&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;Subscribe xmlns="http://docs.oasis-open.org/wsn/b-2"&gt;
+      &lt;ConsumerReference&gt;
+        &lt;a:Address&gt;http://192.168.88.251:8080/onvif_notify_server/&lt;/a:Address&gt;
+      &lt;/ConsumerReference&gt;
+      &lt;InitialTerminationTime&gt;PT60S&lt;/InitialTerminationTime&gt;
+    &lt;/Subscribe&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 984
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:tns1="http://www.onvif.org/ver10/topics"&gt;
+  &lt;s:Header&gt;
+    &lt;wsa5:Action&gt;http://docs.oasis-open.org/wsn/bw-2/NotificationProducer/SubscribeResponse&lt;/wsa5:Action&gt;
+    &lt;wsa5:To&gt;http://192.168.88.250/onvif/event_service&lt;/wsa5:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;wsnt:SubscribeResponse&gt;
+      &lt;wsnt:SubscriptionReference&gt;
+        &lt;wsa5:Address&gt;http://192.168.88.250/onvif/Subscription?Idx=3&lt;/wsa5:Address&gt;
+      &lt;/wsnt:SubscriptionReference&gt;
+      &lt;wsnt:CurrentTime&gt;2018-04-12T17:07:43Z&lt;/wsnt:CurrentTime&gt;
+      &lt;wsnt:TerminationTime&gt;2018-04-12T17:08:43Z&lt;/wsnt:TerminationTime&gt;
+    &lt;/wsnt:SubscribeResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>94</int>
+            </ProcessingTimes>
+          </StepResult>
+          <StepResult>
+            <Number>5</Number>
+            <StepName>Check that the DUT returned Subscribe response</StepName>
+            <StepStart>2018-04-12T16:07:32.0455043Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.0455043Z</StepFinished>
+            <Message>Check that the DUT returned Subscribe response - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>6</Number>
+            <StepName>Check that CurrentTime is specified</StepName>
+            <StepStart>2018-04-12T16:07:32.0455043Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.0611215Z</StepFinished>
+            <Message>Check that CurrentTime is specified - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>7</Number>
+            <StepName>Check that TerminationTime is specified</StepName>
+            <StepStart>2018-04-12T16:07:32.0611215Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.0611215Z</StepFinished>
+            <Message>Check that TerminationTime is specified - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>8</Number>
+            <StepName>Check that TerminationTime and CurrentTime has reasonable values</StepName>
+            <StepStart>2018-04-12T16:07:32.0767464Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.0923706Z</StepFinished>
+            <Message>Check that TerminationTime and CurrentTime has reasonable values - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>9</Number>
+            <StepName>Validate CurrentTime and TerminationTime</StepName>
+            <StepStart>2018-04-12T16:07:32.0923706Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.1079927Z</StepFinished>
+            <Message>Validate CurrentTime and TerminationTime - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>10</Number>
+            <StepName>Check if the DUT returned SubscriptionReference</StepName>
+            <StepStart>2018-04-12T16:07:32.1079927Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.123625Z</StepFinished>
+            <Message>Check if the DUT returned SubscriptionReference - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>11</Number>
+            <StepName>Check if SubscriptionReference contains address</StepName>
+            <StepStart>2018-04-12T16:07:32.123625Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.1392434Z</StepFinished>
+            <Message>Check if SubscriptionReference contains address - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>12</Number>
+            <StepName>Check that URL specified is valid</StepName>
+            <StepStart>2018-04-12T16:07:32.1392434Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.1549074Z</StepFinished>
+            <Message>Check that URL specified is valid - OK</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>13</Number>
+            <StepName>Set Synchronization Point</StepName>
+            <StepStart>2018-04-12T16:07:32.1705176Z</StepStart>
+            <StepFinished>2018-04-12T16:07:32.3580167Z</StepFinished>
+            <Message>Set Synchronization Point</Message>
+            <Request>POST /onvif/Subscription?Idx=3 HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Authorization: Digest username="admin", realm="Login to 2D05085GAK00096", qop="auth", algorithm="MD5", uri="/onvif/Subscription?Idx=3", nonce="b252aWYtZGlnZXN0OjQzMTQ3NTMzMzYw", nc=00000001, cnonce="D0E0020B8800F25C72E5D65660ACF454", opaque="", response="e82a71a38abc5050b97e875a7c47eb34"
+Content-Length: 747
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPointRequest&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:b1dc0856-c9dd-45dc-9ab7-3fd8b09efe1c&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo&gt;
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://192.168.88.250/onvif/Subscription?Idx=3&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;SetSynchronizationPoint xmlns="http://www.onvif.org/ver10/events/wsdl" /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 793
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:tns1="http://www.onvif.org/ver10/topics"&gt;
+  &lt;s:Header&gt;
+    &lt;wsa5:Action&gt;http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPointResponse&lt;/wsa5:Action&gt;
+    &lt;wsa5:To&gt;http://192.168.88.250/onvif/Subscription?Idx=3&lt;/wsa5:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;tev:SetSynchronizationPointResponse /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>78</int>
+            </ProcessingTimes>
+          </StepResult>
+          <StepResult>
+            <Number>14</Number>
+            <StepName>Wait for notification</StepName>
+            <StepStart>2018-04-12T16:07:32.3736248Z</StepStart>
+            <StepFinished>2018-04-12T16:07:52.4054906Z</StepFinished>
+            <Message>No notification received!</Message>
+            <Status>Failed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>15</Number>
+            <StepName>Send Unsubscribe request</StepName>
+            <StepStart>2018-04-12T16:07:52.4524127Z</StepStart>
+            <StepFinished>2018-04-12T16:07:52.6555212Z</StepFinished>
+            <Message>Send Unsubscribe request</Message>
+            <Request>POST /onvif/Subscription?Idx=3 HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Authorization: Digest username="admin", realm="Login to 2D05085GAK00096", qop="auth", algorithm="MD5", uri="/onvif/Subscription?Idx=3", nonce="b252aWYtZGlnZXN0OjQzMTQ3NTUzNjcw", nc=00000001, cnonce="0CF091426ECE3AF00C6F1C0626F6ED83", opaque="", response="7cefacf5da5234e7e2f9b0e97408c127"
+Content-Length: 714
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeRequest&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:7c2e8df6-6a35-44af-b4fd-78b948d81318&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo&gt;
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://192.168.88.250/onvif/Subscription?Idx=3&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;Unsubscribe xmlns="http://docs.oasis-open.org/wsn/b-2" /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 714
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:tns1="http://www.onvif.org/ver10/topics"&gt;
+  &lt;s:Header&gt;
+    &lt;wsa5:Action&gt;http://docs.oasis-open.org/wsn/bw-2/SubscriptionManager/UnsubscribeResponse&lt;/wsa5:Action&gt;
+    &lt;wsa5:To&gt;http://192.168.88.250/onvif/Subscription?Idx=3&lt;/wsa5:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;wsnt:UnsubscribeResponse /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>78</int>
+            </ProcessingTimes>
+          </StepResult>
+        </Steps>
+        <TestStatus>Failed</TestStatus>
+      </Log>
+      <PlainTextLog>EVENT-2-1-17-v14.12 BASIC NOTIFICATION INTERFACE - NOTIFY
+
+   STEP 1 - Get Event service address
+      StepStart: 2018-04-12T16:07:30.7329743Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   STEP 2 - Get Event Properties
+      StepStart: 2018-04-12T16:07:30.8892444Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   Timeout of 60 seconds will be used
+   
+   STEP 3 - Creating listening server
+      StepStart: 2018-04-12T16:07:31.4048772Z
+   STEP PASSED
+
+   STEP 4 - Send Subscribe request
+      StepStart: 2018-04-12T16:07:31.7642488Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   STEP 5 - Check that the DUT returned Subscribe response
+      StepStart: 2018-04-12T16:07:32.0455043Z
+   STEP PASSED
+
+   STEP 6 - Check that CurrentTime is specified
+      StepStart: 2018-04-12T16:07:32.0455043Z
+   STEP PASSED
+
+   STEP 7 - Check that TerminationTime is specified
+      StepStart: 2018-04-12T16:07:32.0611215Z
+   STEP PASSED
+
+   STEP 8 - Check that TerminationTime and CurrentTime has reasonable values
+      StepStart: 2018-04-12T16:07:32.0767464Z
+   STEP PASSED
+
+   STEP 9 - Validate CurrentTime and TerminationTime
+      StepStart: 2018-04-12T16:07:32.0923706Z
+   STEP PASSED
+
+   STEP 10 - Check if the DUT returned SubscriptionReference
+      StepStart: 2018-04-12T16:07:32.1079927Z
+   STEP PASSED
+
+   STEP 11 - Check if SubscriptionReference contains address
+      StepStart: 2018-04-12T16:07:32.123625Z
+   STEP PASSED
+
+   STEP 12 - Check that URL specified is valid
+      StepStart: 2018-04-12T16:07:32.1392434Z
+   STEP PASSED
+
+   STEP 13 - Set Synchronization Point
+      StepStart: 2018-04-12T16:07:32.1549074Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   STEP 14 - Wait for notification
+      StepStart: 2018-04-12T16:07:32.3736248Z
+      No notification received!
+   STEP FAILED
+
+   STEP 15 - Send Unsubscribe request
+      StepStart: 2018-04-12T16:07:52.4524127Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+TEST FAILED
+</PlainTextLog>
+    </TestResult>
+    <TestResult>
+      <TestInfo>
+        <Group>Event Handling\Basic Notification Interface</Group>
+        <Name>EVENT-2-1-18-v14.12 BASIC NOTIFICATION INTERFACE - NOTIFY FILTER</Name>
+        <Id>2-1-18</Id>
+        <LastChangedIn>v14.12</LastChangedIn>
+        <Category>EVENT</Category>
+        <RequirementLevel>Must</RequirementLevel>
+        <RequiredFeatures>
+          <Feature>WSBasicNotification</Feature>
+        </RequiredFeatures>
+        <FunctionalityUnderTest>
+          <Functionality>Notify</Functionality>
+          <Functionality>TopicFilter</Functionality>
+        </FunctionalityUnderTest>
+      </TestInfo>
+      <Log>
+        <Steps>
+          <StepResult>
+            <Number>1</Number>
+            <StepName>Get Event service address</StepName>
+            <StepStart>2018-04-12T16:07:52.7407929Z</StepStart>
+            <StepFinished>2018-04-12T16:07:52.928304Z</StepFinished>
+            <Message>Get Event service address</Message>
+            <Request>POST /onvif/device_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: 347
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetServices xmlns="http://www.onvif.org/ver10/device/wsdl"&gt;
+      &lt;IncludeCapability&gt;false&lt;/IncludeCapability&gt;
+    &lt;/GetServices&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 1984
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl"&gt;
+  &lt;s:Header /&gt;
+  &lt;s:Body&gt;
+    &lt;tds:GetServicesResponse&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/device/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/device_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/analytics/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/analytics_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/imaging/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/imaging_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/media/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/media_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver20/ptz/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/ptz_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;2&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/events/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/event_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+      &lt;tds:Service&gt;
+        &lt;tds:Namespace&gt;http://www.onvif.org/ver10/deviceIO/wsdl&lt;/tds:Namespace&gt;
+        &lt;tds:XAddr&gt;http://192.168.88.250/onvif/deviceIO_service&lt;/tds:XAddr&gt;
+        &lt;tds:Version&gt;
+          &lt;tt:Major&gt;1&lt;/tt:Major&gt;
+          &lt;tt:Minor&gt;0&lt;/tt:Minor&gt;
+        &lt;/tds:Version&gt;
+      &lt;/tds:Service&gt;
+    &lt;/tds:GetServicesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>31</int>
+            </ProcessingTimes>
+          </StepResult>
+          <StepResult>
+            <Number>2</Number>
+            <StepName>Get Event Properties</StepName>
+            <StepStart>2018-04-12T16:07:52.9439289Z</StepStart>
+            <StepFinished>2018-04-12T16:07:53.0220767Z</StepFinished>
+            <Message>Get Event Properties</Message>
+            <Request>POST /onvif/event_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Authorization: Digest username="admin", realm="Login to 2D05085GAK00096", qop="auth", algorithm="MD5", uri="/onvif/event_service", nonce="b252aWYtZGlnZXN0OjQzMTQ3NTU0MTEw", nc=00000001, cnonce="2F13D6ACC83BA6190DF9444A3F62B11B", opaque="", response="a79fd48d370a83ea3eec0538b0bb0db4"
+Content-Length: 724
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:f078cb7f-9d8e-4e85-a8ea-ceffd9b9aa01&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo&gt;
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://192.168.88.250/onvif/event_service&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;GetEventProperties xmlns="http://www.onvif.org/ver10/events/wsdl" /&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 3442
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa5="http://www.w3.org/2005/08/addressing" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;s:Header&gt;
+    &lt;wsa5:Action&gt;http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesResponse&lt;/wsa5:Action&gt;
+    &lt;wsa5:To&gt;http://192.168.88.250/onvif/event_service&lt;/wsa5:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;tev:GetEventPropertiesResponse&gt;
+      &lt;tev:TopicNamespaceLocation&gt;http://www.onvif.org/onvif/ver10/topics/topicns.xml&lt;/tev:TopicNamespaceLocation&gt;
+      &lt;wsnt:FixedTopicSet&gt;true&lt;/wsnt:FixedTopicSet&gt;
+      &lt;wstop:TopicSet&gt;
+        &lt;tns1:RuleEngine&gt;
+          &lt;CellMotionDetector&gt;
+            &lt;Motion wstop:topic="true"&gt;
+              &lt;tt:MessageDescription IsProperty="true"&gt;
+                &lt;tt:Source&gt;
+                  &lt;tt:SimpleItemDescription Name="VideoSourceConfigurationToken" Type="tt:ReferenceToken" /&gt;
+                  &lt;tt:SimpleItemDescription Name="VideoAnalyticsConfigurationToken" Type="tt:ReferenceToken" /&gt;
+                  &lt;tt:SimpleItemDescription Name="Rule" Type="xs:string" /&gt;
+                &lt;/tt:Source&gt;
+                &lt;tt:Data&gt;
+                  &lt;tt:SimpleItemDescription Name="IsMotion" Type="xs:boolean" /&gt;
+                &lt;/tt:Data&gt;
+              &lt;/tt:MessageDescription&gt;
+            &lt;/Motion&gt;
+          &lt;/CellMotionDetector&gt;
+          &lt;TamperDetector&gt;
+            &lt;Tamper wstop:topic="true"&gt;
+              &lt;tt:MessageDescription IsProperty="true"&gt;
+                &lt;tt:Source&gt;
+                  &lt;tt:SimpleItemDescription Name="VideoSourceConfigurationToken" Type="tt:ReferenceToken" /&gt;
+                  &lt;tt:SimpleItemDescription Name="TamperWindowIndex" Type="xs:string" /&gt;
+                &lt;/tt:Source&gt;
+                &lt;tt:Data&gt;
+                  &lt;tt:SimpleItemDescription Name="IsTamper" Type="xs:string" /&gt;
+                &lt;/tt:Data&gt;
+              &lt;/tt:MessageDescription&gt;
+            &lt;/Tamper&gt;
+          &lt;/TamperDetector&gt;
+        &lt;/tns1:RuleEngine&gt;
+        &lt;tns1:VideoSource&gt;
+          &lt;MotionAlarm wstop:topic="true"&gt;
+            &lt;tt:MessageDescription IsProperty="true"&gt;
+              &lt;tt:Source&gt;
+                &lt;tt:SimpleItemDescription Name="Source" Type="tt:ReferenceToken" /&gt;
+              &lt;/tt:Source&gt;
+              &lt;tt:Data&gt;
+                &lt;tt:SimpleItemDescription Name="State" Type="xs:boolean" /&gt;
+              &lt;/tt:Data&gt;
+            &lt;/tt:MessageDescription&gt;
+          &lt;/MotionAlarm&gt;
+        &lt;/tns1:VideoSource&gt;
+        &lt;tns1:Configuration&gt;
+          &lt;VideoEncoderConfiguration wstop:topic="true"&gt;
+            &lt;tt:MessageDescription IsProperty="true"&gt;
+              &lt;tt:Source&gt;
+                &lt;tt:SimpleItemDescription Name="Token" Type="tt:ReferenceToken" /&gt;
+              &lt;/tt:Source&gt;
+              &lt;tt:Data&gt;
+                &lt;tt:ElementItemDescription Name="Configuration" Type="tt:VideoEncoderConfiguration" /&gt;
+              &lt;/tt:Data&gt;
+            &lt;/tt:MessageDescription&gt;
+          &lt;/VideoEncoderConfiguration&gt;
+          &lt;AudioEncoderConfiguration wstop:topic="true"&gt;
+            &lt;tt:MessageDescription IsProperty="true"&gt;
+              &lt;tt:Source&gt;
+                &lt;tt:SimpleItemDescription Name="Token" Type="tt:ReferenceToken" /&gt;
+              &lt;/tt:Source&gt;
+              &lt;tt:Data&gt;
+                &lt;tt:ElementItemDescription Name="Configuration" Type="tt:AudioEncoderConfiguration" /&gt;
+              &lt;/tt:Data&gt;
+            &lt;/tt:MessageDescription&gt;
+          &lt;/AudioEncoderConfiguration&gt;
+        &lt;/tns1:Configuration&gt;
+      &lt;/wstop:TopicSet&gt;
+      &lt;wsnt:TopicExpressionDialect&gt;http://docs.oasis-open.org/wsn/t-1/TopicExpression/Concrete&lt;/wsnt:TopicExpressionDialect&gt;
+      &lt;wsnt:TopicExpressionDialect&gt;http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet&lt;/wsnt:TopicExpressionDialect&gt;
+      &lt;tev:MessageContentFilterDialect&gt;http://www.onvif.org/ver10/tev/messageContentFilter/ItemFilter&lt;/tev:MessageContentFilterDialect&gt;
+      &lt;tev:MessageContentSchemaLocation&gt;http://www.onvif.org/onvif/ver10/schema/onvif.xsd&lt;/tev:MessageContentSchemaLocation&gt;
+    &lt;/tev:GetEventPropertiesResponse&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Passed</Status>
+            <ProcessingTimes>
+              <int>31</int>
+            </ProcessingTimes>
+          </StepResult>
+          <StepResult>
+            <Number>3</Number>
+            <StepName>Parse topic</StepName>
+            <StepStart>2018-04-12T16:07:53.0220767Z</StepStart>
+            <StepFinished>2018-04-12T16:07:53.0376807Z</StepFinished>
+            <Message>Parse topic</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>4</Number>
+            <StepName>Creating listening server</StepName>
+            <StepStart>2018-04-12T16:07:53.0376807Z</StepStart>
+            <StepFinished>2018-04-12T16:07:53.3502724Z</StepFinished>
+            <Message>Creating listening server</Message>
+            <Status>Passed</Status>
+          </StepResult>
+          <StepResult>
+            <Number>5</Number>
+            <StepName>Send Subscribe request</StepName>
+            <StepStart>2018-04-12T16:07:53.3814841Z</StepStart>
+            <StepFinished>2018-04-12T16:07:53.5376935Z</StepFinished>
+            <Message>Invalid Topic Expression</Message>
+            <Request>POST /onvif/event_service HTTP/1.1
+Host: 192.168.88.250
+Content-Type: application/soap+xml; charset=utf-8
+Authorization: Digest username="admin", realm="Login to 2D05085GAK00096", qop="auth", algorithm="MD5", uri="/onvif/event_service", nonce="b252aWYtZGlnZXN0OjQzMTQ3NTU0NTUw", nc=00000001, cnonce="524B8A6EB8A71E71DC95F205E53B1D58", opaque="", response="b57459f53d08b7007df269cf1e6c08a4"
+Content-Length: 1059
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:a="http://www.w3.org/2005/08/addressing"&gt;
+  &lt;s:Header&gt;
+    &lt;a:Action s:mustUnderstand="1"&gt;http://docs.oasis-open.org/wsn/bw-2/NotificationProducer/SubscribeRequest&lt;/a:Action&gt;
+    &lt;a:MessageID&gt;urn:uuid:981d60f7-2ea3-455d-b291-28b297d7f620&lt;/a:MessageID&gt;
+    &lt;a:ReplyTo&gt;
+      &lt;a:Address&gt;http://www.w3.org/2005/08/addressing/anonymous&lt;/a:Address&gt;
+    &lt;/a:ReplyTo&gt;
+    &lt;a:To s:mustUnderstand="1"&gt;http://192.168.88.250/onvif/event_service&lt;/a:To&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;Subscribe xmlns="http://docs.oasis-open.org/wsn/b-2"&gt;
+      &lt;ConsumerReference&gt;
+        &lt;a:Address&gt;http://192.168.88.251:8081/onvif_notify_server/&lt;/a:Address&gt;
+      &lt;/ConsumerReference&gt;
+      &lt;Filter&gt;
+        &lt;wsnt:TopicExpression Dialect="http://www.onvif.org/ver10/tev/topicExpression/ConcreteSet" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2"&gt;
+        &lt;/wsnt:TopicExpression&gt;
+      &lt;/Filter&gt;
+      &lt;InitialTerminationTime&gt;PT60S&lt;/InitialTerminationTime&gt;
+    &lt;/Subscribe&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Request>
+            <Response>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Connection: close
+Content-Length: 1071
+
+&lt;?xml version="1.0" encoding="utf-8" standalone="yes"?&gt;
+&lt;s:Envelope xmlns:sc="http://www.w3.org/2003/05/soap-encoding" xmlns:s="http://www.w3.org/2003/05/soap-envelope" xmlns:wsa5="http://www.w3.org/2005/08/addressing" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery"&gt;
+  &lt;s:Header&gt;
+    &lt;wsa5:Action&gt;http://www.w3.org/2005/08/addressing/soap/fault&lt;/wsa5:Action&gt;
+  &lt;/s:Header&gt;
+  &lt;s:Body&gt;
+    &lt;s:Fault&gt;
+      &lt;s:Code&gt;
+        &lt;s:Value&gt;s:Sender&lt;/s:Value&gt;
+      &lt;/s:Code&gt;
+      &lt;s:Reason&gt;
+        &lt;s:Text xml:lang="en"&gt;Invalid Topic Expression&lt;/s:Text&gt;
+      &lt;/s:Reason&gt;
+      &lt;s:Detail&gt;
+        &lt;wsnt:InvalidTopicExpressionFault&gt;
+          &lt;wsrf-bf:Timestamp&gt;2018-04-12T18:08:04Z&lt;/wsrf-bf:Timestamp&gt;
+          &lt;wsrf-bf:ErrorCode dialect="http://docs.oasis-open.org/wsrf/r-2" /&gt;
+          &lt;wsrf-bf:Description&gt;The Subscribe message contained a TopicExpression filter where the contents of the filter did not match the dialect specified.&lt;/wsrf-bf:Description&gt;
+        &lt;/wsnt:InvalidTopicExpressionFault&gt;
+      &lt;/s:Detail&gt;
+    &lt;/s:Fault&gt;
+  &lt;/s:Body&gt;
+&lt;/s:Envelope&gt;</Response>
+            <Status>Failed</Status>
+            <ProcessingTimes>
+              <int>94</int>
+            </ProcessingTimes>
+          </StepResult>
+        </Steps>
+        <TestStatus>Failed</TestStatus>
+      </Log>
+      <PlainTextLog>EVENT-2-1-18-v14.12 BASIC NOTIFICATION INTERFACE - NOTIFY FILTER
+
+   STEP 1 - Get Event service address
+      StepStart: 2018-04-12T16:07:52.7407929Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   STEP 2 - Get Event Properties
+      StepStart: 2018-04-12T16:07:52.928304Z
+      Transmit done
+      Receive done
+   STEP PASSED
+
+   Timeout of 60 seconds will be used
+   
+   STEP 3 - Parse topic
+      StepStart: 2018-04-12T16:07:53.0220767Z
+      Topic: ; Namespaces: 
+      WARNING: topic not found
+   STEP PASSED
+
+   STEP 4 - Creating listening server
+      StepStart: 2018-04-12T16:07:53.0376807Z
+   STEP PASSED
+
+   STEP 5 - Send Subscribe request
+      StepStart: 2018-04-12T16:07:53.3814841Z
+      Transmit done
+      Receive done
+      SOAP fault returned
+      Code: Sender
+      Reason: Invalid Topic Expression
+   STEP FAILED
+
+TEST FAILED
+</PlainTextLog>
+    </TestResult>
+</Results>

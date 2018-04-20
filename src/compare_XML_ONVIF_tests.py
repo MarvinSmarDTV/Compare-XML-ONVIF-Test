@@ -16,7 +16,7 @@ class Test:
     result, time and steps details
     '''
     def __init__(self, requierment_level, result, time, steps):
-        self.requierment_level = requierment_level
+        self.requirement_level = requierment_level
         self.result = result
         self.time = time
         self.steps = steps
