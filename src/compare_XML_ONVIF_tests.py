@@ -107,7 +107,7 @@ def compare_steps(steps1, steps2):
     '''
     for i in range(len(steps1)):
         if steps1[i].result != steps2[i].result:
-            print('>> Step "{}" is "{}" in results 1 but "{}" in results 2'.format(steps1[i].name, steps1[i].result, steps2[i].result))
+            print('>> Step {} "{}" is "{}" in results 1 but "{}" in results 2'.format(i, steps1[i].name, steps1[i].result, steps2[i].result))
 
 def compare_results(results1, results2):
     '''
