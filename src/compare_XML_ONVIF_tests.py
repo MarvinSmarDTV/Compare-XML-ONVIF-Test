@@ -93,7 +93,7 @@ def analyse_results(results):
         if test.result == 'Passed':
             passed_tests += 1
          
-        if test.requierment_level == 'Must':
+        if test.requirement_level == 'Must':
             total_mandatory_tests += 1
             if test.result == 'Failed':
                 failed_mandatory_tests += 1
