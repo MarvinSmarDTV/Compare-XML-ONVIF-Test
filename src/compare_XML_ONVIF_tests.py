@@ -121,17 +121,21 @@ def compare_results(results1, results2):
 
 def main():
     ''' main '''
-    if len(sys.argv) != 3:
-        print('Usage: {} <file 1> <file 2>'.format(sys.argv[0]))
+    if len(sys.argv) < 2 or len(sys.argv) > 3:
+        print('Usage: {} <file 1> [<file 2>]'.format(sys.argv[0]))
         return
     
-    results1 = construct_results(sys.argv[1])
-    results2 = construct_results(sys.argv[2])
-    
-    analyse_results(results1)
-    analyse_results(results2)
-    
-    compare_results(results1, results2)
+    if len(sys.argv) == 3:
+        results1 = construct_results(sys.argv[1])
+        results2 = construct_results(sys.argv[2])
+        
+        analyse_results(results1)
+        analyse_results(results2)
+        
+        compare_results(results1, results2)
+    else:
+        results = construct_results(sys.argv[1])
+        analyse_results(results)
 
 if __name__ == '__main__':
     main()
