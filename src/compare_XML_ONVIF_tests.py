@@ -15,8 +15,8 @@ class Test:
     Class that represent a test with it's name, requirement level,
     result, time and steps details
     '''
-    def __init__(self, requierment_level, result, time, steps):
-        self.requirement_level = requierment_level
+    def __init__(self, requirement_level, result, time, steps):
+        self.requirement_level = requirement_level
         self.result = result
         self.time = time
         self.steps = steps
@@ -53,11 +53,11 @@ def construct_tests(result_nodes):
     # Run through all TestResult nodes
     for rn in result_nodes:
         name = rn.find('TestInfo').find('Name').text
-        requierment_level = rn.find('TestInfo').find('RequirementLevel').text
+        requirement_level = rn.find('TestInfo').find('RequirementLevel').text
         result = rn.find('Log').find('TestStatus').text
         step_nodes = rn.find('Log').find('Steps').findall('StepResult')
         
-        results[name] = Test(requierment_level, result, 0, construct_steps(step_nodes))
+        results[name] = Test(requirement_level, result, 0, construct_steps(step_nodes))
         
     return results
 
@@ -101,22 +101,34 @@ def analyse_results(results):
     print('Percentage of passed tests: ' + str(passed_tests / total_tests * 100) + '%')
     print('Percentage of failed mandatory tests: ' + str(failed_mandatory_tests / total_mandatory_tests * 100) + '%')
 
+def compare_steps(steps1, steps2):
+    '''
+    Compare 2 steps array
+    '''
+    for i in range(len(steps1)):
+        if steps1[i].result != steps2[i].result:
+            print('>> Step "{}" is "{}" in results 1 but "{}" in results 2'.format(steps1[i].name, steps1[i].result, steps2[i].result))
+
 def compare_results(results1, results2):
     '''
     Compare 2 results dictionary
     '''
     for name in results1:
         if name not in results2:
-            print('> Test "{}" is in results 1 but not in results 2'.format(name))
             continue
         
         if results1[name].result != results2[name].result:
             print('> Test "{}" is "{}" in results 1 but "{}" in results 2'.format(name, results1[name].result, results2[name].result))
             print('  This test is {}'.format('mandatory' if results1.requierment_level == 'Must' else 'optional'))
+            compare_steps(results1[name].steps, results2[name].steps)
             
     for name in results2:
         if name not in results1:
             print('> Test "{}" is in results 2 but not in results 1'.format(name))
+    
+    for name in results1:
+        if name not in results2:
+            print('> Test "{}" is in results 1 but not in results 2'.format(name))
 
 
 def main():
