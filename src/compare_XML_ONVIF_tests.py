@@ -113,6 +113,7 @@ def compare_results(results1, results2):
     '''
     Compare 2 results dictionary
     '''
+    # Look for test result different in file 1 and 2
     for name in results1:
         if name not in results2:
             continue
@@ -121,11 +122,13 @@ def compare_results(results1, results2):
             print('> Test "{}" is "{}" in results 1 but "{}" in results 2'.format(name, results1[name].result, results2[name].result))
             print('  This test is {}'.format('mandatory' if results1.requierment_level == 'Must' else 'optional'))
             compare_steps(results1[name].steps, results2[name].steps)
-            
+    
+    # Test done in file 2 but not in file 1       
     for name in results2:
         if name not in results1:
             print('> Test "{}" is in results 2 but not in results 1'.format(name))
     
+    # Test done in file 1 but not in file 2
     for name in results1:
         if name not in results2:
             print('> Test "{}" is in results 1 but not in results 2'.format(name))
@@ -137,6 +140,7 @@ def main():
         print('Usage: {} <file 1> [<file 2>]'.format(sys.argv[0]))
         return
     
+    # If there are 2 files compare them
     if len(sys.argv) == 3:
         results1 = construct_results(sys.argv[1])
         results2 = construct_results(sys.argv[2])
@@ -146,6 +150,7 @@ def main():
         
         compare_results(results1, results2)
     else:
+        # Else print some stats about the only file
         results = construct_results(sys.argv[1])
         analyse_results(results)
 
