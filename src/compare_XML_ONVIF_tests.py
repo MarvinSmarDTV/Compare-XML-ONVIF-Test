@@ -105,6 +105,8 @@ def compare_steps(steps1, steps2):
     '''
     Compare 2 steps array
     '''
+    if len(steps1) != len(steps2):
+        return
     for i in range(len(steps1)):
         if steps1[i].result != steps2[i].result:
             print('>> Step {} "{}" is "{}" in results 1 but "{}" in results 2'.format(i, steps1[i].name, steps1[i].result, steps2[i].result))
@@ -120,7 +122,7 @@ def compare_results(results1, results2):
         
         if results1[name].result != results2[name].result:
             print('> Test "{}" is "{}" in results 1 but "{}" in results 2'.format(name, results1[name].result, results2[name].result))
-            print('  This test is {}'.format('mandatory' if results1.requirement_level == 'Must' else 'optional'))
+            print('  This test is {}'.format('mandatory' if results1[name].requirement_level == 'Must' else 'optional'))
             compare_steps(results1[name].steps, results2[name].steps)
     
     # Test done in file 2 but not in file 1       
