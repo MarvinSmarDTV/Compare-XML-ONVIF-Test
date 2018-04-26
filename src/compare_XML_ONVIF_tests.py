@@ -120,7 +120,7 @@ def compare_results(results1, results2):
         
         if results1[name].result != results2[name].result:
             print('> Test "{}" is "{}" in results 1 but "{}" in results 2'.format(name, results1[name].result, results2[name].result))
-            print('  This test is {}'.format('mandatory' if results1.requierment_level == 'Must' else 'optional'))
+            print('  This test is {}'.format('mandatory' if results1.requirement_level == 'Must' else 'optional'))
             compare_steps(results1[name].steps, results2[name].steps)
     
     # Test done in file 2 but not in file 1       

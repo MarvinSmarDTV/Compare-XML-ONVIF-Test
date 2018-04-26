@@ -135,6 +135,7 @@
                                                                                              </xs:sequence>
                                                                                        </xs:complexType>
                                                                                  </xs:element>
+																				 <xs:element name="ErrorMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
                                                                                  <xs:element name="TestStatus">
 																					<xs:simpleType>
 																						<xs:restriction base="xs:string">
