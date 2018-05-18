@@ -129,6 +129,19 @@ def compare_steps(steps1, steps2):
                                                                                     steps2[i].result))
 
 
+def print_diff(diff, name1, name2):
+    """
+    Pretty print an array of differences between tests
+    :param diff: Dictionary of tuples containing differences
+    :param name1: Name of file 1
+    :param name2: Name of file 2
+    :return: None
+    """
+    print('{} {} {}'.format(''.join([' ' for x in max(diff.keys())]), name1, name2))
+    for name in diff.keys():
+        print('{name}{offset} {result1} {result2}')
+
+
 def compare_results(results_set1, results_set2):
     """
     Compare 2 results dictionary
@@ -137,6 +150,7 @@ def compare_results(results_set1, results_set2):
     name2 = results_set2[0]
     results1 = results_set1[1]
     results2 = results_set2[1]
+    diff = {}
 
     # Look for test result different in file 1 and 2
     for name in results1:
@@ -144,9 +158,10 @@ def compare_results(results_set1, results_set2):
             continue
 
         if results1[name].result != results2[name].result:
-            print('\n> Test "{}" is "{}" in {} but "{}" in {}'.format(name, results1[name].result, name1, results2[name].result, name2))
-            print('  This test is {}'.format('mandatory' if results1[name].requirement_level == 'Must' else 'optional'))
-            compare_steps(results1[name].steps, results2[name].steps)
+            diff[name] = (results1[name].result, results2[name].result, results1[name].requirement_level)
+            # compare_steps(results1[name].steps, results2[name].steps)
+
+    print_diff(diff, name1, name2)
 
     # Test done in file 2 but not in file 1
     for name in results2:
