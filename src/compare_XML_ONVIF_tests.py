@@ -3,6 +3,7 @@ Created on 18 avr. 2018
 
 @author: vauge
 """
+import os
 import xml.etree.ElementTree as etree
 import xmlschema
 import sys
@@ -87,10 +88,13 @@ def construct_results(file):
     return construct_tests(result_nodes)
 
 
-def analyse_results(results):
+def analyse_results(results_set):
     """
     Print some stats about a results dictionary
     """
+    name = results_set[0]
+    results = results_set[1]
+
     # Counters
     total_tests = len(results)
     total_mandatory_tests = 0
@@ -107,8 +111,9 @@ def analyse_results(results):
             if test.result == 'Failed':
                 failed_mandatory_tests += 1
 
+    print('==={}==='.format(name))
     print('Percentage of passed tests: ' + str(passed_tests / total_tests * 100) + '%')
-    print('Percentage of failed mandatory tests: ' + str(failed_mandatory_tests / total_mandatory_tests * 100) + '%')
+    print('Percentage of failed mandatory tests: ' + str(failed_mandatory_tests / total_mandatory_tests * 100) + '%\n')
 
 
 def compare_steps(steps1, steps2):
@@ -124,51 +129,69 @@ def compare_steps(steps1, steps2):
                                                                                     steps2[i].result))
 
 
-def compare_results(results1, results2):
+def compare_results(results_set1, results_set2):
     """
     Compare 2 results dictionary
     """
+    name1 = results_set1[0]
+    name2 = results_set2[0]
+    results1 = results_set1[1]
+    results2 = results_set2[1]
+
     # Look for test result different in file 1 and 2
     for name in results1:
         if name not in results2:
             continue
 
         if results1[name].result != results2[name].result:
-            print('> Test "{}" is "{}" in results 1 but "{}" in results 2'.format(name, results1[name].result,
-                                                                                  results2[name].result))
+            print('\n> Test "{}" is "{}" in {} but "{}" in {}'.format(name, results1[name].result, name1, results2[name].result, name2))
             print('  This test is {}'.format('mandatory' if results1[name].requirement_level == 'Must' else 'optional'))
             compare_steps(results1[name].steps, results2[name].steps)
 
-    # Test done in file 2 but not in file 1       
+    # Test done in file 2 but not in file 1
     for name in results2:
         if name not in results1:
-            print('> Test "{}" is in results 2 but not in results 1'.format(name))
+            print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
 
     # Test done in file 1 but not in file 2
     for name in results1:
         if name not in results2:
-            print('> Test "{}" is in results 1 but not in results 2'.format(name))
+            print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
+
+
+def usage():
+    print('Usage: {} <file 1> [<file 2>]'.format(sys.argv[0]))
+    sys.exit(1)
 
 
 def main():
     """ main """
     if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print('Usage: {} <file 1> [<file 2>]'.format(sys.argv[0]))
-        return
+        usage()
 
     # If there are 2 files compare them
     if len(sys.argv) == 3:
+        if not os.path.exists(sys.argv[1]) or not os.path.exists(sys.argv[2]):
+            usage()
+
+        name1 = os.path.basename(sys.argv[1])
+        name2 = os.path.basename(sys.argv[2])
+
         results1 = construct_results(sys.argv[1])
         results2 = construct_results(sys.argv[2])
 
-        analyse_results(results1)
-        analyse_results(results2)
+        analyse_results((name1, results1))
+        analyse_results((name2, results2))
 
-        compare_results(results1, results2)
+        compare_results((name1, results1), (name2, results2))
     else:
         # Else print some stats about the only file
+        if not os.path.exists(sys.argv[1]):
+            usage()
+
+        name = os.path.basename(sys.argv[1])
         results = construct_results(sys.argv[1])
-        analyse_results(results)
+        analyse_results((name, results))
 
 
 if __name__ == '__main__':
