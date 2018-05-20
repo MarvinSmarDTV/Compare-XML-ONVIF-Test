@@ -137,7 +137,7 @@ def print_diff(diff, name1, name2):
     :param name2: Name of file 2
     :return: None
     """
-    max_name_length = len(max(diff.keys()))
+    max_name_length = len(max(diff.keys(), key=len))
     
     # array header
     print('{} {} {}'.format(''.join([' ' for x in range(max_name_length)]), name1, name2))
