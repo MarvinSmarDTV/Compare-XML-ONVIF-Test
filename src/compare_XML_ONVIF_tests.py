@@ -40,6 +40,8 @@ class Step:
 def construct_steps(step_nodes):
     """
     Return an array of Step object given an array of "StepResult" nodes
+    :param step_nodes: Array of Node object representing StepResult XML nodes
+    :return: Array of Step object
     """
     steps = []
 
@@ -57,6 +59,8 @@ def construct_steps(step_nodes):
 def construct_tests(result_nodes):
     """
     Return a dictionary of Test object given an array of "TestResult" nodes
+    :param result_nodes: Array of Node object representing TestResult XML nodes
+    :return: Dictionary of Test object
     """
     results = {}
 
@@ -75,6 +79,8 @@ def construct_tests(result_nodes):
 def construct_results(file):
     """
     Return a dictionary of Test object given an XML file path
+    :param file: result file path
+    :return: Dictionary of Test object
     """
     # Validate XML file with XML Schema
     my_schema = xmlschema.XMLSchema('ONVIF_Device_Test_Tool.xsd')
@@ -93,6 +99,8 @@ def construct_results(file):
 def analyse_results(results_set):
     """
     Print some stats about a results dictionary
+    :param results_set: Tuple containing the name of result file and the dictionary of tests
+    :return: None
     """
     name = results_set[0]
     results = results_set[1]
@@ -121,12 +129,19 @@ def analyse_results(results_set):
 def compare_steps(name, requirement_level, steps_set1, steps_set2):
     """
     Compare 2 steps array and pretty print steps list
+    :param name: Name of the parent test
+    :param requirement_level: Requirement level of the parent test
+    :param steps_set1: Tuple containing the name of the first result file and the associated array of Step object
+    :param steps_set2: Tuple containing the name of the second result file and the associated array of Step object
+    :return: None
     """
     name1 = steps_set1[0]
     name2 = steps_set2[0]
     steps1 = steps_set1[1]
     steps2 = steps_set2[1]
+    # maximum number of test between steps1 and steps2
     max_step_number = max([len(steps1), len(steps2)])
+    # maximum length between steps names and result file name one
     max_name_length = len(max([n.name for n in steps1], name1, key=len))
 
     print('\nTest: {} is {}\n'.format(name, 'mandatory' if requirement_level == 'Must' else 'optional'))
@@ -172,6 +187,10 @@ def print_diff(diff, name1, name2):
 def compare_results(results_set1, results_set2):
     """
     Compare 2 results dictionary and interact with user to inspect steps
+    :param results_set1: Tuple containing the name of the first result file and the associated dictionary of Test object
+    :param results_set2: Tuple containing the name of the second result file and the associated dictionary of Test
+    object
+    :return: None
     """
     name1 = results_set1[0]
     name2 = results_set2[0]
@@ -186,7 +205,6 @@ def compare_results(results_set1, results_set2):
 
         if results1[name].result != results2[name].result:
             diff[name] = (results1[name].result, results2[name].result, results1[name].requirement_level)
-            # compare_steps(results1[name].steps, results2[name].steps)
 
     while True:
         print_diff(diff, name1, name2)
@@ -201,6 +219,7 @@ def compare_results(results_set1, results_set2):
             if name not in results2:
                 print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
 
+        # ask to user what test to inspect for steps differences
         inspect = int(input('Inspect (0 to quit) > '))
         if inspect == 0:
             break
