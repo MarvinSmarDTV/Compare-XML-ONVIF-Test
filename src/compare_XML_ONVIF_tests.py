@@ -142,16 +142,37 @@ def compare_steps(name, requirement_level, steps_set1, steps_set2):
     # maximum number of test between steps1 and steps2
     max_step_number = max([len(steps1), len(steps2)])
     # maximum length between steps names and result file name one
-    max_name_length = len(max([n.name for n in steps1], name1, key=len))
+    column1 = [s.name for s in steps1]
+    column1.append(name1)
+    max_name_length = len(max(column1, key=len))
 
     print('\nTest: {} is {}\n'.format(name, 'mandatory' if requirement_level == 'Must' else 'optional'))
 
     offset = ''.join(' ' for x in range(max_name_length - len(name1)))
     print('{name1}{offset} {name2}'.format(name1=name1, offset=offset, name2=name2))
     for i in range(max_step_number):
-        step_name1 = steps1[i].name if i < len(steps1) else ''
-        step_name2 = steps2[i].name if i < len(steps2) else ''
-        offset = ''.join(' ' for x in range(max_name_length - len(step_name1)))
+        # Length of current step name before coloring
+        step_name_length = len(steps1[i].name if i < len(steps1) else '')
+
+        # coloring of step name 1
+        if i < len(steps1):
+            if steps1[i].result == "Passed":
+                step_name1 = '\x1b[32;m{}\x1b[0m'.format(steps1[i].name)
+            else:
+                step_name1 = '\x1b[31;m{}\x1b[0m'.format(steps1[i].name)
+        else:
+            step_name1 = ''
+
+        # coloring of step name 2
+        if i < len(steps2):
+            if steps2[i].result == "Passed":
+                step_name2 = '\x1b[32;m{}\x1b[0m'.format(steps2[i].name)
+            else:
+                step_name2 = '\x1b[31;m{}\x1b[0m'.format(steps2[i].name)
+        else:
+            step_name2 = ''
+
+        offset = ''.join(' ' for x in range(max_name_length - step_name_length))
         print('{step_name1}{offset} {step_name2}'.format(step_name1=step_name1, offset=offset, step_name2=step_name2))
 
 
