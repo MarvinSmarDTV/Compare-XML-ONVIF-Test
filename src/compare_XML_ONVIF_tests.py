@@ -278,6 +278,7 @@ def compare_results(results_set1, results_set2):
 
 def usage():
     print('Usage: {} <file 1> [<file 2>]'.format(sys.argv[0]))
+    print('You can deactivate colored output by environment variable "NOCOLOR"')
     sys.exit(1)
 
 
