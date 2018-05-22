@@ -145,8 +145,12 @@ def print_diff(diff, name1, name2):
     for name in diff.keys():
         offset = ''.join([' ' for x in range(max_name_length - len(name))])
         offset2 = ''.join([' ' for x in range(len(name1) - len(diff[name][0]))])
-        
-        print('{name}{offset} {result1}{offset2} {result2}'.format(name=name, offset=offset, result1=diff[name][0], offset2=offset2, result2=diff[name][1]))
+        result1 = '\x1b[6;30;42mPassed\x1b[0m' if diff[name][0] == 'Passed' else '\x1b[6;30;41mFailed\x1b[0m'
+        result2 = '\x1b[6;30;42mPassed\x1b[0m' if diff[name][1] == 'Passed' else '\x1b[6;30;41mFailed\x1b[0m'
+        # result1 = diff[name][0]
+        # result2 = diff[name][1]
+
+        print('{name}{offset} {result1}{offset2} {result2}'.format(name=name, offset=offset, result1=result1, offset2=offset2, result2=result2))
 
 
 def compare_results(results_set1, results_set2):
