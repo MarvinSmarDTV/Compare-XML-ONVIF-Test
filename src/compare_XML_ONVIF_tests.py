@@ -154,37 +154,45 @@ def compare_steps(name, requirement_level, steps_set1, steps_set2):
         # Length of current step name before coloring
         step_name_length = len(steps1[i].name if i < len(steps1) else '')
 
+        # error message of failed steps
         error_msg = ''
 
-        # coloring of step name 1
-        if i < len(steps1):
-            if steps1[i].result == "Passed":
-                step_name1 = '\x1b[32;m{}\x1b[0m'.format(steps1[i].name)
-            else:
-                error_msg += steps1[i].message
-                step_name1 = '\x1b[31;m{}\x1b[0m'.format(steps1[i].name)
-        else:
-            step_name1 = ''
+        if 'NOCOLOR' in os.environ:
+            step_name1 = steps1[i].name if i < len(steps1) else ''
+            step_name2 = steps2[i].name if i < len(steps2) else ''
 
-        # coloring of step name 2
-        if i < len(steps2):
-            if steps2[i].result == "Passed":
-                step_name2 = '\x1b[32;m{}\x1b[0m'.format(steps2[i].name)
-            else:
-                error_msg += steps2[i].message
-                step_name2 = '\x1b[31;m{}\x1b[0m'.format(steps2[i].name)
+            # error message of failed steps
+            error_msg += steps1[i].message if i < len(steps1) and steps1[i].result == "Failed" else ''
+            error_msg += steps2[i].message if i < len(steps2) and steps2[i].result == "Failed" else ''
         else:
-            step_name2 = ''
+            # coloring of step name 1
+            if i < len(steps1):
+                if steps1[i].result == "Passed":
+                    step_name1 = '\x1b[32;m{}\x1b[0m'.format(steps1[i].name)
+                else:
+                    error_msg += steps1[i].message
+                    step_name1 = '\x1b[31;m{}\x1b[0m'.format(steps1[i].name)
+            else:
+                step_name1 = ''
 
-        # step_name1 = steps1[i].name if i < len(steps1) else ''
-        # step_name2 = steps2[i].name if i < len(steps2) else ''
+            # coloring of step name 2
+            if i < len(steps2):
+                if steps2[i].result == "Passed":
+                    step_name2 = '\x1b[32;m{}\x1b[0m'.format(steps2[i].name)
+                else:
+                    error_msg += steps2[i].message
+                    step_name2 = '\x1b[31;m{}\x1b[0m'.format(steps2[i].name)
+            else:
+                step_name2 = ''
 
         offset = ''.join(' ' for x in range(max_name_length - step_name_length))
         print('{step_name1}{offset} {step_name2}'.format(step_name1=step_name1, offset=offset, step_name2=step_name2))
 
         if error_msg != '':
-            print('\x1b[31;m{}\x1b[0m'.format(error_msg))
-            # print('{}'.format(error_msg))
+            if 'NOCOLOR' in os.environ:
+                print('{}'.format(error_msg))
+            else:
+                print('\x1b[31;m{}\x1b[0m'.format(error_msg))
 
 
 def print_diff(diff, name1, name2):
@@ -205,10 +213,12 @@ def print_diff(diff, name1, name2):
     for name in diff.keys():
         offset = ''.join([' ' for x in range(max_name_length - len(name) - len(str(len(diff))) - 1)])
         offset2 = ''.join([' ' for x in range(len(name1) - len(diff[name][0]))])
-        result1 = '\x1b[32;mPassed\x1b[0m' if diff[name][0] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
-        result2 = '\x1b[32;mPassed\x1b[0m' if diff[name][1] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
-        # result1 = diff[name][0]
-        # result2 = diff[name][1]
+        if 'NOCOLOR' in os.environ:
+            result1 = diff[name][0]
+            result2 = diff[name][1]
+        else:
+            result1 = '\x1b[32;mPassed\x1b[0m' if diff[name][0] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
+            result2 = '\x1b[32;mPassed\x1b[0m' if diff[name][1] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
 
         print('{id} {name}{offset} {result1}{offset2} {result2}'.format(id=id, name=name, offset=offset,
                                                                         result1=result1, offset2=offset2,
