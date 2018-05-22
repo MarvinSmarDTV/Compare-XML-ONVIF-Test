@@ -172,6 +172,9 @@ def compare_steps(name, requirement_level, steps_set1, steps_set2):
         else:
             step_name2 = ''
 
+        # step_name1 = steps1[i].name if i < len(steps1) else ''
+        # step_name2 = steps2[i].name if i < len(steps2) else ''
+
         offset = ''.join(' ' for x in range(max_name_length - step_name_length))
         print('{step_name1}{offset} {step_name2}'.format(step_name1=step_name1, offset=offset, step_name2=step_name2))
 
