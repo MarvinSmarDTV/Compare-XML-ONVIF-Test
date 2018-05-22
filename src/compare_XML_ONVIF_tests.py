@@ -154,11 +154,14 @@ def compare_steps(name, requirement_level, steps_set1, steps_set2):
         # Length of current step name before coloring
         step_name_length = len(steps1[i].name if i < len(steps1) else '')
 
+        error_msg = ''
+
         # coloring of step name 1
         if i < len(steps1):
             if steps1[i].result == "Passed":
                 step_name1 = '\x1b[32;m{}\x1b[0m'.format(steps1[i].name)
             else:
+                error_msg += steps1[i].message
                 step_name1 = '\x1b[31;m{}\x1b[0m'.format(steps1[i].name)
         else:
             step_name1 = ''
@@ -168,6 +171,7 @@ def compare_steps(name, requirement_level, steps_set1, steps_set2):
             if steps2[i].result == "Passed":
                 step_name2 = '\x1b[32;m{}\x1b[0m'.format(steps2[i].name)
             else:
+                error_msg += steps2[i].message
                 step_name2 = '\x1b[31;m{}\x1b[0m'.format(steps2[i].name)
         else:
             step_name2 = ''
@@ -177,6 +181,10 @@ def compare_steps(name, requirement_level, steps_set1, steps_set2):
 
         offset = ''.join(' ' for x in range(max_name_length - step_name_length))
         print('{step_name1}{offset} {step_name2}'.format(step_name1=step_name1, offset=offset, step_name2=step_name2))
+
+        if error_msg != '':
+            print('\x1b[31;m{}\x1b[0m'.format(error_msg))
+            # print('{}'.format(error_msg))
 
 
 def print_diff(diff, name1, name2):
