@@ -31,9 +31,10 @@ class Step:
     Class that represent a step with it's name and result
     """
 
-    def __init__(self, name, result):
+    def __init__(self, name, result, message):
         self.name = name
         self.result = result
+        self.message = message
 
 
 def construct_steps(step_nodes):
@@ -46,8 +47,9 @@ def construct_steps(step_nodes):
     for sn in step_nodes:
         name = sn.find('StepName').text
         result = sn.find('Status').text
+        message = sn.find('Message').text
 
-        steps.append(Step(name, result))
+        steps.append(Step(name, result, message))
 
     return steps
 
