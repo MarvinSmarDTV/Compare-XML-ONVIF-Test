@@ -116,17 +116,26 @@ def analyse_results(results_set):
     print('Percentage of failed mandatory tests: ' + str(failed_mandatory_tests / total_mandatory_tests * 100) + '%\n')
 
 
-def compare_steps(steps1, steps2):
+def compare_steps(name, requirement_level, steps_set1, steps_set2):
     """
-    Compare 2 steps array
+    Compare 2 steps array and pretty print steps list
     """
-    if len(steps1) != len(steps2):
-        return
-    for i in range(len(steps1)):
-        if steps1[i].result != steps2[i].result:
-            print(
-                '>> Step {} "{}" is "{}" in results 1 but "{}" in results 2'.format(i, steps1[i].name, steps1[i].result,
-                                                                                    steps2[i].result))
+    name1 = steps_set1[0]
+    name2 = steps_set2[0]
+    steps1 = steps_set1[1]
+    steps2 = steps_set2[1]
+    max_step_number = max([len(steps1), len(steps2)])
+    max_name_length = len(max([n.name for n in steps1], name1, key=len))
+
+    print('\nTest: {} is {}\n'.format(name, 'mandatory' if requirement_level == 'Must' else 'optional'))
+
+    offset = ''.join(' ' for x in range(max_name_length - len(name1)))
+    print('{name1}{offset} {name2}'.format(name1=name1, offset=offset, name2=name2))
+    for i in range(max_step_number):
+        step_name1 = steps1[i].name if i < len(steps1) else ''
+        step_name2 = steps2[i].name if i < len(steps2) else ''
+        offset = ''.join(' ' for x in range(max_name_length - len(step_name1)))
+        print('{step_name1}{offset} {step_name2}'.format(step_name1=step_name1, offset=offset, step_name2=step_name2))
 
 
 def print_diff(diff, name1, name2):
@@ -137,25 +146,30 @@ def print_diff(diff, name1, name2):
     :param name2: Name of file 2
     :return: None
     """
-    max_name_length = len(max(diff.keys(), key=len))
+    max_name_length = len(max(diff.keys(), key=len)) + len(str(len(diff))) + 1
     
     # array header
-    print('{} {} {}'.format(''.join([' ' for x in range(max_name_length)]), name1, name2))
-    
+    print('\n{} {} {}'.format(''.join([' ' for x in range(max_name_length)]), name1, name2))
+
+    id = 1
+
     for name in diff.keys():
-        offset = ''.join([' ' for x in range(max_name_length - len(name))])
+        offset = ''.join([' ' for x in range(max_name_length - len(name) - len(str(len(diff))) - 1)])
         offset2 = ''.join([' ' for x in range(len(name1) - len(diff[name][0]))])
-        result1 = '\x1b[6;30;42mPassed\x1b[0m' if diff[name][0] == 'Passed' else '\x1b[6;30;41mFailed\x1b[0m'
-        result2 = '\x1b[6;30;42mPassed\x1b[0m' if diff[name][1] == 'Passed' else '\x1b[6;30;41mFailed\x1b[0m'
+        result1 = '\x1b[32;mPassed\x1b[0m' if diff[name][0] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
+        result2 = '\x1b[32;mPassed\x1b[0m' if diff[name][1] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
         # result1 = diff[name][0]
         # result2 = diff[name][1]
 
-        print('{name}{offset} {result1}{offset2} {result2}'.format(name=name, offset=offset, result1=result1, offset2=offset2, result2=result2))
+        print('{id} {name}{offset} {result1}{offset2} {result2}'.format(id=id, name=name, offset=offset,
+                                                                        result1=result1, offset2=offset2,
+                                                                        result2=result2))
+        id += 1
 
 
 def compare_results(results_set1, results_set2):
     """
-    Compare 2 results dictionary
+    Compare 2 results dictionary and interact with user to inspect steps
     """
     name1 = results_set1[0]
     name2 = results_set2[0]
@@ -172,17 +186,31 @@ def compare_results(results_set1, results_set2):
             diff[name] = (results1[name].result, results2[name].result, results1[name].requirement_level)
             # compare_steps(results1[name].steps, results2[name].steps)
 
-    print_diff(diff, name1, name2)
+    while True:
+        print_diff(diff, name1, name2)
 
-    # Test done in file 2 but not in file 1
-    for name in results2:
-        if name not in results1:
-            print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
+        # Test done in file 2 but not in file 1
+        for name in results2:
+            if name not in results1:
+                print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
 
-    # Test done in file 1 but not in file 2
-    for name in results1:
-        if name not in results2:
-            print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
+        # Test done in file 1 but not in file 2
+        for name in results1:
+            if name not in results2:
+                print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
+
+        inspect = int(input('Inspect (0 to quit) > '))
+        if inspect == 0:
+            break
+        elif inspect > len(diff):
+            continue
+
+        name = list(diff)[inspect - 1]
+        requirement_level = results1[name].requirement_level
+        steps1 = results1[name].steps
+        steps2 = results2[name].steps
+
+        compare_steps(name, requirement_level, (name1, steps1), (name2, steps2))
 
 
 def usage():
