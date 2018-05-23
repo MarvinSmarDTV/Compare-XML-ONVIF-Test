@@ -6,6 +6,7 @@
 
 - pytest 3.5.0
 - xmlschema 0.9.26
+- openpyxl 2.5.3
 
 ## Description
 
