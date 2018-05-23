@@ -126,7 +126,7 @@ def analyse_results(results_set):
     print('Percentage of failed mandatory tests: ' + str(failed_mandatory_tests / total_mandatory_tests * 100) + '%\n')
 
 
-def compare_steps(name, requirement_level, steps_set1, steps_set2):
+def compare_steps(wb, name, requirement_level, steps_set1, steps_set2):
     """
     Compare 2 steps array and pretty print steps list
     :param name: Name of the parent test
@@ -207,7 +207,6 @@ def compare_results(results_set1, results_set2):
     name2 = results_set2[0]
     results1 = results_set1[1]
     results2 = results_set2[1]
-    diff = {}
     wb = Workbook()
     ws = wb.active
     ws.title = 'Test differences'
@@ -225,27 +224,20 @@ def compare_results(results_set1, results_set2):
             ws['A' + str(2 + i)] = name
             ws['B' + str(2 + i)] = results1[name].result
             ws['C' + str(2 + i)] = results2[name].result
-            # diff[name] = (results1[name].result, results2[name].result, results1[name].requirement_level)
+            compare_steps(wb, name, results1[name].requirement_level, (name1, results1[name].steps),
+                          (name2, results2[name].steps))
 
         i += 1
 
-    # Test done in file 2 but not in file 1
-    for name in results2:
-        if name not in results1:
-            print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
-
-    # Test done in file 1 but not in file 2
-    for name in results1:
-        if name not in results2:
-            print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
-
-    for inspect in range(len(diff)):
-        name = list(diff)[inspect]
-        requirement_level = results1[name].requirement_level
-        steps1 = results1[name].steps
-        steps2 = results2[name].steps
-
-        compare_steps(name, requirement_level, (name1, steps1), (name2, steps2))
+    # # Test done in file 2 but not in file 1
+    # for name in results2:
+    #     if name not in results1:
+    #         print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
+    #
+    # # Test done in file 1 but not in file 2
+    # for name in results1:
+    #     if name not in results2:
+    #         print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
 
     wb.save('output.xlsx')
 
