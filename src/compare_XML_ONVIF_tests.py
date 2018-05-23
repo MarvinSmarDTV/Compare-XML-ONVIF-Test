@@ -289,7 +289,12 @@ def main():
 
     # If there are 2 files compare them
     if len(sys.argv) == 3:
-        if not os.path.exists(sys.argv[1]) or not os.path.exists(sys.argv[2]):
+        if not os.path.exists(sys.argv[1]):
+            sys.stderr.write("{} doesn't exist".format(sys.argv[1]))
+            usage()
+
+        if not os.path.exists(sys.argv[2]):
+            sys.stderr.write("{} doesn't exist".format(sys.argv[2]))
             usage()
 
         name1 = os.path.basename(sys.argv[1])
@@ -305,6 +310,7 @@ def main():
     else:
         # Else print some stats about the only file
         if not os.path.exists(sys.argv[1]):
+            sys.stderr.write("{} doesn't exist".format(sys.argv[1]))
             usage()
 
         name = os.path.basename(sys.argv[1])
