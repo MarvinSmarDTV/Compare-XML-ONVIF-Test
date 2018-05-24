@@ -230,15 +230,31 @@ def compare_results(results_set1, results_set2):
                           (name2, results2[name].steps))
             i += 1
 
-    # # Test done in file 2 but not in file 1
-    # for name in results2:
-    #     if name not in results1:
-    #         print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
-    #
-    # # Test done in file 1 but not in file 2
-    # for name in results1:
-    #     if name not in results2:
-    #         print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
+    # Test done in file 2 but not in file 1
+    for name in results2:
+        if name not in results1:
+            ws['A' + str(2 + i)] = name
+            ws['B' + str(2 + i)] = '-'
+            ws['C' + str(2 + i)] = results2[name].result
+
+            # Update color
+            ws['B' + str(2 + i)].font = Font(color=RED)
+            ws['C' + str(2 + i)].font = Font(color=RED) if results2[name].result == "Failed" else Font(color=MYGREEN)
+
+            i += 1
+
+    # Test done in file 1 but not in file 2
+    for name in results1:
+        if name not in results2:
+            ws['A' + str(2 + i)] = name
+            ws['B' + str(2 + i)] = results1[name].result
+            ws['C' + str(2 + i)] = '-'
+
+            # Update color
+            ws['B' + str(2 + i)].font = Font(color=RED) if results1[name].result == "Failed" else Font(color=MYGREEN)
+            ws['C' + str(2 + i)].font = Font(color=RED)
+
+            i += 1
 
     adjust_column_width(ws, 'A')
     adjust_column_width(ws, 'B')
