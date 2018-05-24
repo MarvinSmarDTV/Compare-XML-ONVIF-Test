@@ -129,11 +129,12 @@ def analyse_results(results_set):
     print('Percentage of failed mandatory tests: ' + str(failed_mandatory_tests / total_mandatory_tests * 100) + '%\n')
 
 
-def compare_steps(wb, name, requirement_level, steps_set1, steps_set2):
+def compare_steps(wb, name, num, requirement_level, steps_set1, steps_set2):
     """
     Compare 2 steps array and print steps list to the workbook in a new worksheet
     :param wb: Output workbook
     :param name: Name of the parent test
+    :param num: Test number
     :param requirement_level: Requirement level of the parent test
     :param steps_set1: Tuple containing the name of the first result file and the associated array of Step object
     :param steps_set2: Tuple containing the name of the second result file and the associated array of Step object
@@ -145,7 +146,7 @@ def compare_steps(wb, name, requirement_level, steps_set1, steps_set2):
     steps2 = steps_set2[1]
 
     # Create new worksheet
-    ws = wb.create_sheet(name)
+    ws = wb.create_sheet(str(num))
 
     # maximum number of test between steps1 and steps2
     max_step_number = max([len(steps1), len(steps2)])
@@ -225,7 +226,7 @@ def compare_results(results_set1, results_set2):
             ws['C' + str(2 + i)].font = Font(color=RED) if results2[name].result == "Failed" else Font(color=MYGREEN)
 
             # Compare step for this test and create a new associated worksheet
-            compare_steps(wb, name, results1[name].requirement_level, (name1, results1[name].steps),
+            compare_steps(wb, name, i + 2, results1[name].requirement_level, (name1, results1[name].steps),
                           (name2, results2[name].steps))
             i += 1
 
