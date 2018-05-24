@@ -244,7 +244,7 @@ def compare_results(results_set1, results_set2):
     adjust_column_width(ws, 'C')
 
     # Write the workbook on disk
-    wb.save('output.xlsx')
+    wb.save('{}_vs_{}.xlsx'.format(name1, name2))
 
 
 def usage():
