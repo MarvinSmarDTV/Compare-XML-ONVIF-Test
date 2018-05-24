@@ -188,8 +188,7 @@ def compare_results(results_set1, results_set2):
             ws['C' + str(2 + i)] = results2[name].result
             compare_steps(wb, name, results1[name].requirement_level, (name1, results1[name].steps),
                           (name2, results2[name].steps))
-
-        i += 1
+            i += 1
 
     # # Test done in file 2 but not in file 1
     # for name in results2:
