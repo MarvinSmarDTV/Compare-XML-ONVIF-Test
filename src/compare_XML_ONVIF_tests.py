@@ -128,7 +128,7 @@ def analyse_results(results_set):
 
 def compare_steps(wb, name, requirement_level, steps_set1, steps_set2):
     """
-    Compare 2 steps array and pretty print steps list
+    Compare 2 steps array and print steps list to the workbook in a new worksheet
     :param wb: Output workbook
     :param name: Name of the parent test
     :param requirement_level: Requirement level of the parent test
@@ -156,10 +156,25 @@ def compare_steps(wb, name, requirement_level, steps_set1, steps_set2):
         ws['C' + str(3 + i)] = steps1[i].message if i < len(steps1) and steps1[i].result == "Failed" else ''
         ws['D' + str(3 + i)] = steps2[i].message if i < len(steps2) and steps2[i].result == "Failed" else ''
 
+    adjust_column_width(ws, 'A')
+    adjust_column_width(ws, 'B')
+    adjust_column_width(ws, 'C')
+    adjust_column_width(ws, 'D')
+
+
+def adjust_column_width(worksheet, column):
+    """
+    Update column width according to cells content length
+    :param worksheet: Worksheet to update
+    :param column: Column name to update
+    :return: None
+    """
+    worksheet.column_dimensions[column].width = max([len(c.value) if c.value else 0 for c in worksheet[column]])
+
 
 def compare_results(results_set1, results_set2):
     """
-    Compare 2 results dictionary and interact with user to inspect steps
+    Compare 2 results dictionary and print result to a workbook
     :param results_set1: Tuple containing the name of the first result file and the associated dictionary of Test object
     :param results_set2: Tuple containing the name of the second result file and the associated dictionary of Test
     object
@@ -199,6 +214,10 @@ def compare_results(results_set1, results_set2):
     # for name in results1:
     #     if name not in results2:
     #         print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
+
+    adjust_column_width(ws, 'A')
+    adjust_column_width(ws, 'B')
+    adjust_column_width(ws, 'C')
 
     wb.save('output.xlsx')
 
