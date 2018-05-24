@@ -7,6 +7,10 @@ import os
 import xml.etree.ElementTree as etree
 import xmlschema
 import sys
+from openpyxl import Workbook
+from openpyxl.styles import Font
+from openpyxl.styles.colors import RED
+MYGREEN = 'FF00C800'
 
 
 class MalformedResultsFile(Exception):
@@ -19,10 +23,9 @@ class Test:
     result, time and steps details
     """
 
-    def __init__(self, requirement_level, result, time, steps):
+    def __init__(self, requirement_level, result, steps):
         self.requirement_level = requirement_level
         self.result = result
-        self.time = time
         self.steps = steps
 
 
@@ -71,7 +74,7 @@ def construct_tests(result_nodes):
         result = rn.find('Log').find('TestStatus').text
         step_nodes = rn.find('Log').find('Steps').findall('StepResult')
 
-        results[name] = Test(requirement_level, result, 0, construct_steps(step_nodes))
+        results[name] = Test(requirement_level, result, construct_steps(step_nodes))
 
     return results
 
@@ -126,9 +129,10 @@ def analyse_results(results_set):
     print('Percentage of failed mandatory tests: ' + str(failed_mandatory_tests / total_mandatory_tests * 100) + '%\n')
 
 
-def compare_steps(name, requirement_level, steps_set1, steps_set2):
+def compare_steps(wb, name, requirement_level, steps_set1, steps_set2):
     """
-    Compare 2 steps array and pretty print steps list
+    Compare 2 steps array and print steps list to the workbook in a new worksheet
+    :param wb: Output workbook
     :param name: Name of the parent test
     :param requirement_level: Requirement level of the parent test
     :param steps_set1: Tuple containing the name of the first result file and the associated array of Step object
@@ -139,96 +143,52 @@ def compare_steps(name, requirement_level, steps_set1, steps_set2):
     name2 = steps_set2[0]
     steps1 = steps_set1[1]
     steps2 = steps_set2[1]
+
+    # Create new worksheet
+    ws = wb.create_sheet(name)
+
     # maximum number of test between steps1 and steps2
     max_step_number = max([len(steps1), len(steps2)])
-    # maximum length between steps names and result file name one
-    column1 = [s.name for s in steps1]
-    column1.append(name1)
-    max_name_length = len(max(column1, key=len))
 
-    print('\nTest: {} is {}\n'.format(name, 'mandatory' if requirement_level == 'Must' else 'optional'))
+    # Headers
+    ws['A1'] = '{} is {}'.format(name, 'mandatory' if requirement_level == 'Must' else 'optional')
+    ws['A2'] = name1
+    ws['B2'] = name2
 
-    offset = ''.join(' ' for x in range(max_name_length - len(name1)))
-    print('{name1}{offset} {name2}'.format(name1=name1, offset=offset, name2=name2))
     for i in range(max_step_number):
-        # Length of current step name before coloring
-        step_name_length = len(steps1[i].name if i < len(steps1) else '')
+        if i < len(steps1):
+            # Step name
+            ws['A' + str(3 + i)] = steps1[i].name
+            # Color in red if failed, otherwise in green
+            ws['A' + str(3 + i)].font = Font(color=RED) if steps1[i].result == "Failed" else Font(color=MYGREEN)
+            # Append error message if failed
+            ws['A' + str(3 + i)].value += ': ' + steps1[i].message if steps1[i].result == "Failed" else ''
 
-        # error message of failed steps
-        error_msg = ''
+        if i < len(steps2):
+            # Step name
+            ws['B' + str(3 + i)] = steps2[i].name
+            # Color in red if failed, otherwise in green
+            ws['B' + str(3 + i)].font = Font(color=RED) if steps2[i].result == "Failed" else Font(color=MYGREEN)
+            # Append error message if failed
+            ws['B' + str(3 + i)].value += ': ' + steps2[i].message if steps2[i].result == "Failed" else ''
 
-        if 'NOCOLOR' in os.environ:
-            step_name1 = steps1[i].name if i < len(steps1) else ''
-            step_name2 = steps2[i].name if i < len(steps2) else ''
-
-            # error message of failed steps
-            error_msg += steps1[i].message if i < len(steps1) and steps1[i].result == "Failed" else ''
-            error_msg += steps2[i].message if i < len(steps2) and steps2[i].result == "Failed" else ''
-        else:
-            # coloring of step name 1
-            if i < len(steps1):
-                if steps1[i].result == "Passed":
-                    step_name1 = '\x1b[32;m{}\x1b[0m'.format(steps1[i].name)
-                else:
-                    error_msg += steps1[i].message
-                    step_name1 = '\x1b[31;m{}\x1b[0m'.format(steps1[i].name)
-            else:
-                step_name1 = ''
-
-            # coloring of step name 2
-            if i < len(steps2):
-                if steps2[i].result == "Passed":
-                    step_name2 = '\x1b[32;m{}\x1b[0m'.format(steps2[i].name)
-                else:
-                    error_msg += steps2[i].message
-                    step_name2 = '\x1b[31;m{}\x1b[0m'.format(steps2[i].name)
-            else:
-                step_name2 = ''
-
-        offset = ''.join(' ' for x in range(max_name_length - step_name_length))
-        print('{step_name1}{offset} {step_name2}'.format(step_name1=step_name1, offset=offset, step_name2=step_name2))
-
-        if error_msg != '':
-            if 'NOCOLOR' in os.environ:
-                print('{}'.format(error_msg))
-            else:
-                print('\x1b[31;m{}\x1b[0m'.format(error_msg))
+    adjust_column_width(ws, 'A')
+    adjust_column_width(ws, 'B')
 
 
-def print_diff(diff, name1, name2):
+def adjust_column_width(worksheet, column):
     """
-    Pretty print an array of differences between tests
-    :param diff: Dictionary of tuples containing differences
-    :param name1: Name of file 1
-    :param name2: Name of file 2
+    Update column width according to cells content length
+    :param worksheet: Worksheet to update
+    :param column: Column's name to update
     :return: None
     """
-    max_name_length = len(max(diff.keys(), key=len)) + len(str(len(diff))) + 1
-    
-    # array header
-    print('\n{} {} {}'.format(''.join([' ' for x in range(max_name_length)]), name1, name2))
-
-    id = 1
-
-    for name in diff.keys():
-        offset = ''.join([' ' for x in range(max_name_length - len(name) - len(str(len(diff))) - 1)])
-        offset2 = ''.join([' ' for x in range(len(name1) - len(diff[name][0]))])
-        if 'NOCOLOR' in os.environ:
-            result1 = diff[name][0]
-            result2 = diff[name][1]
-        else:
-            result1 = '\x1b[32;mPassed\x1b[0m' if diff[name][0] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
-            result2 = '\x1b[32;mPassed\x1b[0m' if diff[name][1] == 'Passed' else '\x1b[31;mFailed\x1b[0m'
-
-        print('{id} {name}{offset} {result1}{offset2} {result2}'.format(id=id, name=name, offset=offset,
-                                                                        result1=result1, offset2=offset2,
-                                                                        result2=result2))
-        id += 1
+    worksheet.column_dimensions[column].width = max([len(c.value) if c.value else 0 for c in worksheet[column]])
 
 
 def compare_results(results_set1, results_set2):
     """
-    Compare 2 results dictionary and interact with user to inspect steps
+    Compare 2 results dictionary and print result to a workbook
     :param results_set1: Tuple containing the name of the first result file and the associated dictionary of Test object
     :param results_set2: Tuple containing the name of the second result file and the associated dictionary of Test
     object
@@ -238,47 +198,57 @@ def compare_results(results_set1, results_set2):
     name2 = results_set2[0]
     results1 = results_set1[1]
     results2 = results_set2[1]
-    diff = {}
+
+    # Create a new workbook
+    wb = Workbook()
+    # Get the first worksheet
+    ws = wb.active
+    ws.title = 'Test differences'
+
+    # Headers
+    ws['B1'] = name1
+    ws['C1'] = name2
 
     # Look for test result different in file 1 and 2
+    i = 0
     for name in results1:
         if name not in results2:
             continue
 
         if results1[name].result != results2[name].result:
-            diff[name] = (results1[name].result, results2[name].result, results1[name].requirement_level)
+            ws['A' + str(2 + i)] = name
+            ws['B' + str(2 + i)] = results1[name].result
+            ws['C' + str(2 + i)] = results2[name].result
 
-    while True:
-        print_diff(diff, name1, name2)
+            # Update color
+            ws['B' + str(2 + i)].font = Font(color=RED) if results1[name].result == "Failed" else Font(color=MYGREEN)
+            ws['C' + str(2 + i)].font = Font(color=RED) if results2[name].result == "Failed" else Font(color=MYGREEN)
 
-        # Test done in file 2 but not in file 1
-        for name in results2:
-            if name not in results1:
-                print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
+            # Compare step for this test and create a new associated worksheet
+            compare_steps(wb, name, results1[name].requirement_level, (name1, results1[name].steps),
+                          (name2, results2[name].steps))
+            i += 1
 
-        # Test done in file 1 but not in file 2
-        for name in results1:
-            if name not in results2:
-                print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
+    # # Test done in file 2 but not in file 1
+    # for name in results2:
+    #     if name not in results1:
+    #         print('> Test "{}" is in {} but not in {}'.format(name, name2, name1))
+    #
+    # # Test done in file 1 but not in file 2
+    # for name in results1:
+    #     if name not in results2:
+    #         print('> Test "{}" is in {} but not in {}'.format(name, name1, name2))
 
-        # ask to user what test to inspect for steps differences
-        inspect = int(input('Inspect (0 to quit) > '))
-        if inspect == 0:
-            break
-        elif inspect > len(diff):
-            continue
+    adjust_column_width(ws, 'A')
+    adjust_column_width(ws, 'B')
+    adjust_column_width(ws, 'C')
 
-        name = list(diff)[inspect - 1]
-        requirement_level = results1[name].requirement_level
-        steps1 = results1[name].steps
-        steps2 = results2[name].steps
-
-        compare_steps(name, requirement_level, (name1, steps1), (name2, steps2))
+    # Write the workbook on disk
+    wb.save('output.xlsx')
 
 
 def usage():
     print('Usage: {} <file 1> [<file 2>]'.format(sys.argv[0]))
-    print('You can deactivate colored output by environment variable "NOCOLOR"')
     sys.exit(1)
 
 
