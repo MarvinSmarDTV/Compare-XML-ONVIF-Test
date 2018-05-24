@@ -8,6 +8,9 @@ import xml.etree.ElementTree as etree
 import xmlschema
 import sys
 from openpyxl import Workbook
+from openpyxl.styles import Font
+from openpyxl.styles.colors import RED
+MYGREEN = 'FF00C800'
 
 
 class MalformedResultsFile(Exception):
@@ -140,33 +143,44 @@ def compare_steps(wb, name, requirement_level, steps_set1, steps_set2):
     name2 = steps_set2[0]
     steps1 = steps_set1[1]
     steps2 = steps_set2[1]
+
+    # Create new worksheet
     ws = wb.create_sheet(name)
+
     # maximum number of test between steps1 and steps2
     max_step_number = max([len(steps1), len(steps2)])
 
-    ws['A1'] = 'Test: {} is {}'.format(name, 'mandatory' if requirement_level == 'Must' else 'optional')
+    # Headers
+    ws['A1'] = '{} is {}'.format(name, 'mandatory' if requirement_level == 'Must' else 'optional')
     ws['A2'] = name1
     ws['B2'] = name2
 
     for i in range(max_step_number):
-        ws['A' + str(3 + i)] = steps1[i].name if i < len(steps1) else ''
-        ws['B' + str(3 + i)] = steps2[i].name if i < len(steps2) else ''
+        if i < len(steps1):
+            # Step name
+            ws['A' + str(3 + i)] = steps1[i].name
+            # Color in red if failed, otherwise in green
+            ws['A' + str(3 + i)].font = Font(color=RED) if steps1[i].result == "Failed" else Font(color=MYGREEN)
+            # Append error message if failed
+            ws['A' + str(3 + i)].value += ': ' + steps1[i].message if steps1[i].result == "Failed" else ''
 
-        # error message of failed steps
-        ws['C' + str(3 + i)] = steps1[i].message if i < len(steps1) and steps1[i].result == "Failed" else ''
-        ws['D' + str(3 + i)] = steps2[i].message if i < len(steps2) and steps2[i].result == "Failed" else ''
+        if i < len(steps2):
+            # Step name
+            ws['B' + str(3 + i)] = steps2[i].name
+            # Color in red if failed, otherwise in green
+            ws['B' + str(3 + i)].font = Font(color=RED) if steps2[i].result == "Failed" else Font(color=MYGREEN)
+            # Append error message if failed
+            ws['B' + str(3 + i)].value += ': ' + steps2[i].message if steps2[i].result == "Failed" else ''
 
     adjust_column_width(ws, 'A')
     adjust_column_width(ws, 'B')
-    adjust_column_width(ws, 'C')
-    adjust_column_width(ws, 'D')
 
 
 def adjust_column_width(worksheet, column):
     """
     Update column width according to cells content length
     :param worksheet: Worksheet to update
-    :param column: Column name to update
+    :param column: Column's name to update
     :return: None
     """
     worksheet.column_dimensions[column].width = max([len(c.value) if c.value else 0 for c in worksheet[column]])
@@ -184,10 +198,14 @@ def compare_results(results_set1, results_set2):
     name2 = results_set2[0]
     results1 = results_set1[1]
     results2 = results_set2[1]
+
+    # Create a new workbook
     wb = Workbook()
+    # Get the first worksheet
     ws = wb.active
     ws.title = 'Test differences'
 
+    # Headers
     ws['B1'] = name1
     ws['C1'] = name2
 
@@ -201,6 +219,12 @@ def compare_results(results_set1, results_set2):
             ws['A' + str(2 + i)] = name
             ws['B' + str(2 + i)] = results1[name].result
             ws['C' + str(2 + i)] = results2[name].result
+
+            # Update color
+            ws['B' + str(2 + i)].font = Font(color=RED) if results1[name].result == "Failed" else Font(color=MYGREEN)
+            ws['C' + str(2 + i)].font = Font(color=RED) if results2[name].result == "Failed" else Font(color=MYGREEN)
+
+            # Compare step for this test and create a new associated worksheet
             compare_steps(wb, name, results1[name].requirement_level, (name1, results1[name].steps),
                           (name2, results2[name].steps))
             i += 1
@@ -219,6 +243,7 @@ def compare_results(results_set1, results_set2):
     adjust_column_width(ws, 'B')
     adjust_column_width(ws, 'C')
 
+    # Write the workbook on disk
     wb.save('output.xlsx')
 
 
