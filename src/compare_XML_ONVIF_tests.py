@@ -304,10 +304,14 @@ def main():
         name2 = os.path.basename(sys.argv[2])
 
         # Clean invalid XML characters before parsing
+        print('Cleaning {}...'.format(name1))
         file_content1 = clean_invalid_xml_characters(sys.argv[1])
+        print('Cleaning {}...'.format(name2))
         file_content2 = clean_invalid_xml_characters(sys.argv[2])
 
+        print('Parsing {}...'.format(name1))
         results1 = construct_results(file_content1)
+        print('Parsing {}...'.format(name2))
         results2 = construct_results(file_content2)
 
         analyse_results((name1, results1))
@@ -323,8 +327,10 @@ def main():
         name = os.path.basename(sys.argv[1])
 
         # Clean invalid XML characters before parsing
+        print('Cleaning {}...'.format(name))
         file_content = clean_invalid_xml_characters(sys.argv[1])
 
+        print('Parsing {}...'.format(name))
         results = construct_results(file_content)
         analyse_results((name, results))
 
