@@ -4,9 +4,9 @@
 
 ## Requirements
 
-- pytest 3.5.0
-- xmlschema 0.9.26
-- openpyxl 2.5.3
+- pytest >= 3.5.0
+- xmlschema >= 0.9.29
+- openpyxl >= 2.5.3
 
 ```sh
 pip install xmlschema

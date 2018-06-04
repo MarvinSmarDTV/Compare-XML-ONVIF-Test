@@ -7,6 +7,7 @@ import os
 import xml.etree.ElementTree as etree
 import xmlschema
 import sys
+import re
 from openpyxl import Workbook
 from openpyxl.styles import Font
 from openpyxl.styles.colors import RED
@@ -79,21 +80,19 @@ def construct_tests(result_nodes):
     return results
 
 
-def construct_results(file):
+def construct_results(file_content):
     """
     Return a dictionary of Test object given an XML file path
-    :param file: result file path
+    :param file_content: result file content
     :return: Dictionary of Test object
     """
     # Validate XML file with XML Schema
     my_schema = xmlschema.XMLSchema('ONVIF_Device_Test_Tool.xsd')
-    if not my_schema.is_valid(file):
+    if not my_schema.is_valid(file_content):
         raise MalformedResultsFile('')
 
-    # Open and parse XML file
-    tree = etree.parse(file)
-
-    root_node = tree.getroot()
+    # Parse XML file content
+    root_node = etree.fromstring(file_content)
     result_nodes = root_node.find('Results').findall('TestResult')
 
     return construct_tests(result_nodes)
@@ -269,6 +268,23 @@ def usage():
     sys.exit(1)
 
 
+def clean_invalid_xml_characters(file):
+    """
+    Clean invalid XML characters
+    :param file: XML file path
+    :return: String of file content cleaned
+    """
+    invalid_xml = re.compile(r'&#x[0-1]?[0-9a-eA-E];')
+    new_content = ''
+
+    with open(file, 'r') as f:
+        for line in f:
+            nline, count = invalid_xml.subn('', line)
+            new_content += nline
+
+    return new_content
+
+
 def main():
     """ main """
     if len(sys.argv) < 2 or len(sys.argv) > 3:
@@ -287,8 +303,12 @@ def main():
         name1 = os.path.basename(sys.argv[1])
         name2 = os.path.basename(sys.argv[2])
 
-        results1 = construct_results(sys.argv[1])
-        results2 = construct_results(sys.argv[2])
+        # Clean invalid XML characters before parsing
+        file_content1 = clean_invalid_xml_characters(sys.argv[1])
+        file_content2 = clean_invalid_xml_characters(sys.argv[2])
+
+        results1 = construct_results(file_content1)
+        results2 = construct_results(file_content2)
 
         analyse_results((name1, results1))
         analyse_results((name2, results2))
@@ -301,7 +321,11 @@ def main():
             usage()
 
         name = os.path.basename(sys.argv[1])
-        results = construct_results(sys.argv[1])
+
+        # Clean invalid XML characters before parsing
+        file_content = clean_invalid_xml_characters(sys.argv[1])
+
+        results = construct_results(file_content)
         analyse_results((name, results))
 
 
